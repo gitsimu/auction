@@ -1,13 +1,46 @@
 import React from 'react'
 import Head from 'next/head'
-import styles from '../styles/Home.module.css'
+import styles from '../../styles/Home.module.css'
+import DiscordConfig from '../../discordConfig'
 
-import axios from 'axios'
-import FirebaseConfig from '../firebaseConfig'
-import DiscordConfig from '../discordConfig'
+const url = require('url')
 
 export default function Home() {
+  const fragment = new URLSearchParams(window.location.hash.slice(1));
+  
+	if (fragment.has("access_token")) {
+		const accessToken = fragment.get("access_token");
+		const tokenType = fragment.get("token_type");
+		fetch('https://discord.com/api/users/@me', {
+			headers: {
+				authorization: `${tokenType} ${accessToken}`
+			}
+		})
+			.then(res => res.json())
+			.then(response => {
+				const { username, discriminator } = response;
+        document.getElementById('info').innerText += ` ${username}#${discriminator}`;
+        console.log('response', ` ${username}#${discriminator}`)
+			})
+			.catch(console.error);
+	}
+	else {
+		document.getElementById('login').style.display = 'block';
+	}
 
+  const access = async (code) => {
+    const data = {
+      'client_id': DiscordConfig.CLIENT_ID,
+      'client_secret': DiscordConfig.CLIENT_SECRET,
+      'grant_type': 'authorization_code',
+      'code': code,
+      'redirect_uri': DiscordConfig.REDIRECT_URI,
+      'scope': 'identify email'
+    }
+    const config = {headers: { 'Content-Type': 'application/x-www-form-urlencoded' }}
+    const res = await axios.post(`${DiscordConfig.API_ENDPOINT}/oauth2/token`, data, config)
+    return await res
+  }  
 
   return (
     <div className={styles.container}>
