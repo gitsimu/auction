@@ -26,15 +26,15 @@ export default (req, res) => {
     const accessCode = urlObj.query.code
     console.log(`The access code is: ${accessCode}`)
 
-    access(accessCode)
-      .then((data) => {
-        console.log('data', data)
-        res.json({ result: 'authorized', data: data })
-      })
-      .catch((err) => {
-        console.log('err', err)
-        res.json({ result: 'unauthorized', data: err })
-      })
+    // access(accessCode)
+    //   .then((data) => {
+    //     console.log('data', data)
+    //     res.json({ result: 'authorized', data: data })
+    //   })
+    //   .catch((err) => {
+    //     console.log('err', err)
+    //     res.json({ result: 'unauthorized', data: err })
+    //   })
   } else {
     res.json({ result: 'unauthorized' })
   }
