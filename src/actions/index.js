@@ -3,6 +3,11 @@ export const connection = info => ({
   info
 })
 
+export const selectedItem = item => ({
+  type: 'SELECTED_ITEM',
+  item
+})
+
 export const addItems = items => ({
   type: 'ADD_ITEMS',
   items

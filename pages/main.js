@@ -3,11 +3,22 @@ import { connect } from 'react-redux'
 import { connection } from '../src/actions'
 
 import AuctionSearch from '../src/containers/AuctionSearch'
+import AddItems from '../src/containers/AddItems'
+
+import FirebaseConfig from '../firebaseConfig'
+import firebase from 'firebase/app'
+import "firebase/auth"
+import "firebase/database"
 
 // https://medium.com/@orels1/using-discord-oauth2-a-simple-guide-and-an-example-nodejs-app-71a9e032770
 
 function Main() {
   const [screen, setScreen] = useState(0)
+
+  if (!firebase.apps.length) {
+    firebase.initializeApp(FirebaseConfig)
+  }
+  const database = firebase.database()
 
   useEffect(() => {
     console.log('start');
@@ -28,7 +39,10 @@ function Main() {
       </div>
       <div className="container-screen">
         {screen === 0 && (
-          <AuctionSearch/>
+          <AuctionSearch database={database}/>
+        )}
+        {screen === 1 && (
+          <AddItems database={database}/>
         )}
       </div>
     </div>
