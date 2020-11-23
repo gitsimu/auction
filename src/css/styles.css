@@ -19,6 +19,48 @@
   background: #333;
 }
 
+input[type="text"] {
+  width: 100%;
+  height: 34px;
+  background: rgb(78, 78, 78);
+  border-radius: 50px;
+  border: 1px solid rgb(60, 60, 60);
+  outline: none;
+  padding: 5px 20px;
+  color: #fff;
+  transition: 0.2s ease all;
+}
+input[type="text"].invalid {
+  border-color: #f44336;
+}
+select {
+  height: 34px;
+  width: 100%;
+  border-radius: 10px;
+  background: rgb(78, 78, 78);  
+  border: 1px solid rgb(60, 60, 60);
+  color: #fff;
+  outline: none;
+  padding: 5px 10px;
+}
+textarea {
+  resize: none;
+  height: 100px;
+  width: 100%;
+  border-radius: 10px;
+  background: rgb(78, 78, 78);  
+  border: 1px solid rgb(60, 60, 60);
+  color: #fff;
+  outline: none;
+  padding: 5px 10px;
+  font-family: Arial, Helvetica, sans-serif;
+}
+.sub-title {
+  font-size: 14px;
+  color: #999;
+  padding: 0 5px;
+}
+
 .auction-main {
   background: rgba(34, 37, 43, 1);
   width: 100%;
@@ -130,7 +172,8 @@
   padding: 0 10px;
 }
 .auction-search-list-item > .info { 
-  width: 200px;
+  flex: 1;
+  padding: 0 10px;
 }
 .auction-search-list-item > .price1 {
   width: 100px;
@@ -151,7 +194,7 @@
   display: flex;
   flex-direction: row;
 }
-.auction-search-input {
+/* .auction-search-input {
   width: 100%;
   height: 34px;
   background: rgb(78, 78, 78);
@@ -160,7 +203,7 @@
   outline: none;
   padding: 5px 20px;
   color: #fff;
-}
+} */
 .auction-search-input-button {
   width: 150px;
   height: 34px;
@@ -230,3 +273,54 @@
 .bidding .bidding-close > div {
   background: rgba(34, 37, 43, 1);
 }
+
+
+.add-items {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 100%; 
+}
+.add-items-info {
+  width: 300px;
+}
+.add-items-info > div {
+  padding: 5px;
+}
+.add-items-price > div {
+  padding: 2px 0;
+}
+.my-items {
+  flex: 1;
+  height: 100%;
+  padding: 20px;
+}
+.my-items-list {
+  height: 100%;
+  background: #333;
+  border-radius: 10px;
+}
+
+.add-items-confirm {
+  margin-top: 10px;
+}
+.add-items-confirm > div {
+  background: #333;
+  color: #777;
+  width: 100%;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50px;
+  font-size: 14px;
+  cursor: default;
+  pointer-events: none;
+}
+.add-items-confirm.active > div {
+  background: #006cff; 
+  color: #fff;
+  cursor: pointer;
+  pointer-events: all;
+}
+

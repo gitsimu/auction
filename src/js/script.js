@@ -138,3 +138,16 @@ return returnString;
 export const numberWithCommas = (x) => {
   return String(x).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
 }
+
+export const getCookie = (cookieName) => {
+  let cookieValue
+  if(document.cookie){
+      const array = document.cookie.split((escape(cookieName)+'='))
+      if(array.length >= 2){
+          const arraySub = array[1].split(';')
+          cookieValue = unescape(arraySub[0])
+      }
+  }
+  return cookieValue
+}
+

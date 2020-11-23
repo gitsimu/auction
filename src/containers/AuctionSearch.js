@@ -4,36 +4,52 @@ import { connect } from 'react-redux'
 import Item from '../components/Item'
 
 const CATEGORY = [
-  {key: 0, name: 'category 0'},
-  {key: 1, name: 'category 1'},
-  {key: 2, name: 'category 2'},
-  {key: 3, name: 'category 3'},
-  {key: 4, name: 'category 4'},
-  {key: 5, name: 'category 5'},
+  {key: 0, name: 'weapon'},
+  {key: 1, name: 'armor'},
+  {key: 2, name: 'accessary'},
+  {key: 3, name: 'consumable'},
+  {key: 4, name: 'etc'},
+  {key: 5, name: 'minions'},
 ]
 
-function AuctionSearch(info) {
+function AuctionSearch({info, ...props}) {
   const [category, setCategory] = React.useState(0)
   const [items, setItems] = React.useState([])
-  
+  const database = props.database
+
   React.useEffect(() => {
     console.log('info', info)
 
     const arr = []
-    for(let i = 0; i < 10; i++) {
-      arr.push({
-        id: `test-${i}`,
-        thumbnail: 'https://chat.smlog.co.kr/resources/icon_bubble_256.png',
-        name: `Item code-${i}`,
-        info: '+ 10 Enhanced',
-        price1: 20000000,
-        price2: 30000000,
-        timestamp: 1605840669702,
-        writer: `[nonamed-${i}]`
-      })
-    }
+    // for(let i = 0; i < 5; i++) {
+    //   arr.push({
+    //     id: `test-${i}`,
+    //     thumbnail: 'https://chat.smlog.co.kr/resources/icon_bubble_256.png',
+    //     key: i,
+    //     info: '+ 10 Enhanced',
+    //     price1: 20000000,
+    //     price2: 30000000,
+    //     timestamp: 1605840669702,
+    //     writer: `[nonamed-${i}]`
+    //   })
+    // }    
     setItems(arr)
   }, [])
+
+  React.useEffect(() => {
+    const ref = database.ref(`/Items/${category}`).orderByChild('timestamp')
+    ref.once('value').then((snapshots) => {
+      const arr = []
+      snapshots.forEach(snapshot => {
+        arr.push(snapshot.val())
+      })
+      setItems(arr)
+    })
+
+    return () => {
+      ref.off()
+    }
+  }, [category])
 
   React.useEffect(() => {
     // console.log('rerendering', items)
@@ -43,8 +59,8 @@ function AuctionSearch(info) {
     <div className="auction-search">
       <div className="auction-search-top">
         <div className="auction-search-area">
-          <input type="text" class="auction-search-input"></input>
-          <div class="auction-search-input-button">검색</div>
+          <input type="text" className="auction-search-input"></input>
+          <div className="auction-search-input-button">검색</div>
         </div>
       </div>
       <div className="auction-search-bottom">
@@ -59,13 +75,13 @@ function AuctionSearch(info) {
             <div className="name">품명</div>
             <div className="info">설명</div>
             <div className="price1">입찰가</div>
-            <div className="price2">즉구가</div>
-            <div className="time">게시일</div>
+            <div className="price2">즉구가</div>            
             <div className="writer">게시자</div>
+            <div className="time">만료</div>
           </div>
           <div className="auction-search-list">
             {items.map((m, i) => {
-              return (<Item item={m}/>)
+              return (<Item item={m} database={database} key={m.id}/>)
             })}  
           </div>
         </div>        

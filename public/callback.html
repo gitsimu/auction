@@ -10,28 +10,24 @@
 	<a id="login" style="display: none;" href="your oauth2 url here">Identify Yourself</a>
 	<script>
 		window.onload = () => {
-			const fragment = new URLSearchParams(window.location.hash.slice(1));			
-
+			const fragment = new URLSearchParams(window.location.hash.slice(1));
 			if (fragment.has("access_token")) {
 				const accessToken = fragment.get("access_token");
 				const tokenType = fragment.get("token_type");
 
-				fetch('https://discord.com/api/users/@me', {
-					headers: {
-						authorization: `${tokenType} ${accessToken}`
-					}
-				})
-					.then(res => res.json())
-					.then(response => {
-						const { username, discriminator } = response;
-						document.getElementById('info').innerText += ` ${username}#${discriminator}`;
-					})
-					.catch(console.error);
+				setCookie('discord_access_token', accessToken, 1)
+				setCookie('discord_token_type', tokenType, 1)
 
+				location.href = "/main"
 			}
-			else {
-				document.getElementById('login').style.display = 'block';
-			}
+		}
+
+		function setCookie(cookie_name, value, days) {
+			var exdate = new Date();
+			exdate.setDate(exdate.getDate() + days);			
+
+			var cookie_value = escape(value) + ((days == null) ? '' : '; expires=' + exdate.toUTCString());
+			document.cookie = cookie_name + '=' + cookie_value;
 		}
 	</script>
 </body>

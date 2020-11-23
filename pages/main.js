@@ -10,9 +10,11 @@ import firebase from 'firebase/app'
 import "firebase/auth"
 import "firebase/database"
 
+import * as script from '../src/js/script'
+
 // https://medium.com/@orels1/using-discord-oauth2-a-simple-guide-and-an-example-nodejs-app-71a9e032770
 
-function Main() {
+function Main({info, connection}) {
   const [screen, setScreen] = useState(0)
 
   if (!firebase.apps.length) {
@@ -21,7 +23,23 @@ function Main() {
   const database = firebase.database()
 
   useEffect(() => {
-    console.log('start');
+    console.log('start')
+
+    // 
+    const accessToken = script.getCookie('discord_access_token')
+    const tokenType = script.getCookie('discord_token_type')
+    
+    if (accessToken && tokenType) {
+      fetch('https://discord.com/api/users/@me', {
+		  	headers: {authorization: `${tokenType} ${accessToken}`}
+		  })
+		  	.then(res => res.json())
+		  	.then(response => {          
+          connection(response)		  		
+		  	})
+        .catch(console.error)
+    }
+          
   }, [])
 
   return (
@@ -54,7 +72,7 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  connection: () => dispatch(connection())
+  connection: (info) => dispatch(connection(info))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Main)

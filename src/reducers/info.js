@@ -1,20 +1,13 @@
-const initialState = {
-  key: '',
-  id: '',
-  connected: false,
-  isLoading: false,
-}
+const initialState = {}
 
-const info = (state = [], action) => {
+const info = (state = initialState, action) => {
   console.log('[action]:', action);
   switch (action.type) {
     case 'CONNECT':
       return {
         ...state,
-        key: action.key,
-        id: action.id,
-        connected: true,
-        isLoading: false,
+        ...action.info,
+        userid: `${action.info.username}#${action.info.discriminator}`
       };
     default:
       return state
