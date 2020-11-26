@@ -2,24 +2,25 @@ import React from 'react'
 import { connect } from 'react-redux'
 import firebase from 'firebase/app'
 import Item from '../components/Item'
+import { CATEGORY, ITEMS } from '../js/global'
 
-const CATEGORY = [
-  {key: 0, name: 'weapon'},
-  {key: 1, name: 'armor'},
-  {key: 2, name: 'accessary'},
-  {key: 3, name: 'consumable'},
-  {key: 4, name: 'etc'},
-  {key: 5, name: 'minions'},
-]
+// const CATEGORY = [
+//   {key: 0, name: 'weapon'},
+//   {key: 1, name: 'armor'},
+//   {key: 2, name: 'accessary'},
+//   {key: 3, name: 'consumable'},
+//   {key: 4, name: 'etc'},
+//   {key: 5, name: 'minions'},
+// ]
 
-const ITEMS = [
-  {key: 0, category: 0, name: 'item 0', thumbnail: 'https://chat.smlog.co.kr/resources/icon_bubble_256.png'},
-  {key: 1, category: 1, name: 'item 1', thumbnail: 'https://chat.smlog.co.kr/resources/icon_bubble_256.png'},
-  {key: 2, category: 2, name: 'item 2', thumbnail: 'https://chat.smlog.co.kr/resources/icon_bubble_256.png'},
-  {key: 3, category: 3, name: 'item 3', thumbnail: 'https://chat.smlog.co.kr/resources/icon_bubble_256.png'},
-  {key: 4, category: 4, name: 'item 4', thumbnail: 'https://chat.smlog.co.kr/resources/icon_bubble_256.png'},
-  {key: 5, category: 5, name: 'item 5', thumbnail: 'https://chat.smlog.co.kr/resources/icon_bubble_256.png'},
-]
+// const ITEMS = [
+//   {key: 0, category: 0, name: 'item 0', thumbnail: 'https://chat.smlog.co.kr/resources/icon_bubble_256.png'},
+//   {key: 1, category: 1, name: 'item 1', thumbnail: 'https://chat.smlog.co.kr/resources/icon_bubble_256.png'},
+//   {key: 2, category: 2, name: 'item 2', thumbnail: 'https://chat.smlog.co.kr/resources/icon_bubble_256.png'},
+//   {key: 3, category: 3, name: 'item 3', thumbnail: 'https://chat.smlog.co.kr/resources/icon_bubble_256.png'},
+//   {key: 4, category: 4, name: 'item 4', thumbnail: 'https://chat.smlog.co.kr/resources/icon_bubble_256.png'},
+//   {key: 5, category: 5, name: 'item 5', thumbnail: 'https://chat.smlog.co.kr/resources/icon_bubble_256.png'},
+// ]
 
 function AddItems({info, ...props}) {
   const [exhibitCategory, setExhibitCategory] = React.useState(0)
@@ -31,11 +32,12 @@ function AddItems({info, ...props}) {
   const database = props.database
 
   React.useEffect(() => {
-    const items = database.ref(`/Users/${info.id}/Items`).orderByChild('timestamp')
+    // const items = database.ref(`/Users/${info.id}/Items`).orderByChild('timestamp')
+    const items = database.ref(`/Items`)
 
     Promise.resolve()
       .then(() => {
-        return items.once('value')
+        return items.orderByChild('userid').equalTo(`${info.id}`).once('value')
       })
       .then((snapshots) => {
         const arr = []
@@ -57,12 +59,14 @@ function AddItems({info, ...props}) {
 
         return ref
       })
+    
+    return items.off()
   }, [])
 
   const setItems = (newItems) => {
     if (newItems) {
-      console.log('myItems', myItems)
-      console.log('newItems', newItems)
+      // console.log('myItems', myItems)
+      // console.log('newItems', newItems)
       setMyItems(oldItems => [...oldItems, newItems])
     }    
   }
@@ -79,31 +83,21 @@ function AddItems({info, ...props}) {
     alert('등록되었습니다.')
   }, [exhibitCategory, exhibitItem, description, price1, price2])
 
-  const handleAddItems = (category, key, info, price1, price2) => {
+  const handleAddItems = (category, key, description, price1, price2) => {
     const itemId = Math.random().toString(36).substr(2, 9)
     const timestamp = firebase.database.ServerValue.TIMESTAMP
 
-    database.ref(`/Items/${category}/${itemId}`).update({
+    database.ref(`/Items/${itemId}`).update({
       id: itemId,
       category: category,
       key: key,
-      info: info,
+      description: description,
       price1: price1,
       price2: price2,
       state: 1,
-      writer: info.id,
-      timestamp: timestamp
-    })
-
-    database.ref(`/Users/${info.id}/Items/${itemId}`).update({
-      id: itemId,
-      category: category,
-      key: key,
-      info: info,
-      price1: price1,
-      price2: price2,
-      state: 1,
-      writer: info.id,
+      history: [],
+      userid: info.id,
+      discord: info,
       timestamp: timestamp
     })
   }
@@ -120,7 +114,7 @@ function AddItems({info, ...props}) {
     const p1 = parseInt(price1.value)
     const p2 = parseInt(price2.value)
     // console.log(exhibitCategory, exhibitItem, p1, p2, p2 >= p1)
-    return (exhibitCategory && exhibitItem && p1 > 0 && p2 > 0 && p2 >= p1)
+    return (exhibitCategory && exhibitItem && p1 > 0 && p2 > 0 && p2 >= p1 && price1.valid && price2.valid)
   }
 
   return (
@@ -175,7 +169,7 @@ function AddItems({info, ...props}) {
         <div className="my-items-title sub-title">내가 등록한 물건</div>
         <div className="my-items-list">
           {myItems.map((m) => {
-            return (<Item item={m}/>)
+            return (<Item item={m} database={database} key={m.id} mine={true}/>)
           })}
         </div>
       </div>

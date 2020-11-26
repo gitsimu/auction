@@ -33,3 +33,14 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 https://discordjs.guide/oauth2/#putting-it-together
 https://discord.com/developers/docs/topics/oauth2
 https://discord.com/developers/applications/767649418148446248/oauth2
+
+
+$('img.logo-img-core').each((i, img) => {
+    var src = $(img).attr('src')
+    var link = document.createElement('a');
+    link.href = src;
+    link.download = i + '.jpg';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+})

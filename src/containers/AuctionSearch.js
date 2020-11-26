@@ -1,16 +1,17 @@
 import React from 'react'
 import { connect } from 'react-redux'
 
+import { CATEGORY, ITEMS } from '../js/global'
 import Item from '../components/Item'
 
-const CATEGORY = [
-  {key: 0, name: 'weapon'},
-  {key: 1, name: 'armor'},
-  {key: 2, name: 'accessary'},
-  {key: 3, name: 'consumable'},
-  {key: 4, name: 'etc'},
-  {key: 5, name: 'minions'},
-]
+// const CATEGORY = [
+//   {key: 0, name: 'weapon'},
+//   {key: 1, name: 'armor'},
+//   {key: 2, name: 'accessary'},
+//   {key: 3, name: 'consumable'},
+//   {key: 4, name: 'etc'},
+//   {key: 5, name: 'minions'},
+// ]
 
 function AuctionSearch({info, ...props}) {
   const [category, setCategory] = React.useState(0)
@@ -20,7 +21,7 @@ function AuctionSearch({info, ...props}) {
   React.useEffect(() => {
     console.log('info', info)
 
-    const arr = []
+    // const arr = []
     // for(let i = 0; i < 5; i++) {
     //   arr.push({
     //     id: `test-${i}`,
@@ -33,22 +34,21 @@ function AuctionSearch({info, ...props}) {
     //     writer: `[nonamed-${i}]`
     //   })
     // }    
-    setItems(arr)
+    // setItems(arr)
   }, [])
 
   React.useEffect(() => {
-    const ref = database.ref(`/Items/${category}`).orderByChild('timestamp')
-    ref.once('value').then((snapshots) => {
+    const ref = database.ref(`/Items`)
+    ref.orderByChild('category').equalTo(`${category}`).on('value', snapshots => {
       const arr = []
       snapshots.forEach(snapshot => {
-        arr.push(snapshot.val())
+        const isExpired = new Date().getTime() - snapshot.val().timestamp > 84600000;
+        !isExpired && arr.push(snapshot.val())        
       })
       setItems(arr)
     })
 
-    return () => {
-      ref.off()
-    }
+    return () => { ref.off() }
   }, [category])
 
   React.useEffect(() => {
@@ -76,12 +76,12 @@ function AuctionSearch({info, ...props}) {
             <div className="info">설명</div>
             <div className="price1">입찰가</div>
             <div className="price2">즉구가</div>            
-            <div className="writer">게시자</div>
             <div className="time">만료</div>
+            <div className="writer">게시자</div>            
           </div>
           <div className="auction-search-list">
             {items.map((m, i) => {
-              return (<Item item={m} database={database} key={m.id}/>)
+              return (<Item item={m} database={database} key={m.id} mine={false}/>)
             })}  
           </div>
         </div>        
