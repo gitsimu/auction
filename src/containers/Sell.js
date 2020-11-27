@@ -22,7 +22,7 @@ import { CATEGORY, ITEMS } from '../js/global'
 //   {key: 5, category: 5, name: 'item 5', thumbnail: 'https://chat.smlog.co.kr/resources/icon_bubble_256.png'},
 // ]
 
-function AddItems({info, ...props}) {
+function Sell({info, ...props}) {
   const [exhibitCategory, setExhibitCategory] = React.useState(0)
   const [exhibitItem, setExhibitItem] = React.useState(false)
   const [description, setDescription] = React.useState('')
@@ -182,4 +182,4 @@ const mapStateToProps = state => ({
   info: state.info,
 })
 
-export default connect(mapStateToProps)(AddItems)
+export default connect(mapStateToProps)(Sell)

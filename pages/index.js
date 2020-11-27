@@ -20,7 +20,7 @@ export default function Home() {
           Welcome to Auction!
         </h1> */}
         <div className={styles.loginContainer}>
-          <div className={styles.loginTitle}>            
+          <div className={styles.loginTitle}>
             FRESH AUCTION
             <div className={styles.badge}>Beta</div>
           </div>

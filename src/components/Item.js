@@ -99,7 +99,7 @@ function Item({user, info, selectedItem, ...props}) {
       const seconds = Math.floor(time % 3600 % 60)
       // console.log(time, hours, minites, seconds)
           
-      // setTime(time > 0 ? `${hours > 9 ? hours : '0' + hours}:${minites > 9 ? minites : '0' + minites}:${seconds > 9 ? seconds : '0' + seconds}` : '만료')
+      setTime(time > 0 ? `${hours > 9 ? hours : '0' + hours}:${minites > 9 ? minites : '0' + minites}:${seconds > 9 ? seconds : '0' + seconds}` : '만료')
     }, 1000)
 
     return () => {clearInterval(interval)}

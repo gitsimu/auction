@@ -3,7 +3,8 @@ import { connect } from 'react-redux'
 import { connection } from '../src/actions'
 
 import AuctionSearch from '../src/containers/AuctionSearch'
-import AddItems from '../src/containers/AddItems'
+import Sell from '../src/containers/Sell'
+import Buy from '../src/containers/Buy'
 
 import FirebaseConfig from '../firebaseConfig'
 import firebase from 'firebase/app'
@@ -49,7 +50,7 @@ function Main({info, connection}) {
           검색
         </div>
         <div className={screen === 1 ? "container-menu-tab active" : "container-menu-tab"} onClick={() => { setScreen(1) }}>
-          입찰 내역
+          판매 관리
         </div>
         <div className={screen === 2 ? "container-menu-tab active" : "container-menu-tab"} onClick={() => { setScreen(2) }}>
           판매 내역
@@ -60,7 +61,10 @@ function Main({info, connection}) {
           <AuctionSearch database={database}/>
         )}
         {screen === 1 && (
-          <AddItems database={database}/>
+          <Sell database={database}/>
+        )}
+        {screen === 2 && (
+          <Buy database={database}/>
         )}
       </div>
     </div>
