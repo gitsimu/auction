@@ -87,6 +87,9 @@ function AuctionSearch({info, ...props}) {
             {items.map((m, i) => {
               return (<Item item={m} database={database} key={m.id} mine={false}/>)
             })}
+            {items.length === 0 && (
+              <div className="auction-search-list-empty">상품이 없습니다.</div>
+            )}
             {loading && (<div id="loading"><div></div></div>)}
           </div>
         </div>        

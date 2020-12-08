@@ -29,9 +29,15 @@ export default function Home() {
           </a> 
         </div>
         <div className={styles.copyright}>
-          Copyright (c) 2020 yakuza tribe
+          <br/>
+          개발자 <span>[야쿠자]solnreo</span>
           <br/><br/>
-          Permission is hereby granted, free of charge, to any person obtaining a copy
+          이 페이지는 FRESH 스톤에이지 사용자들을 위해 만들어졌습니다.<br/>
+          FRESH AUCTION 사용에 있어 발생하는 문제는 전적으로 사용자에게 있으며,<br/>
+          이로인에 발생하는 문제 및 유저 간의 마찰에 대해서는 책임지지 않습니다.<br/>
+          또한, FRESH 스톤에이지 운영진 분들과는 전혀 연관이 없음을 알려드립니다.<br/><br/>
+          Copyright (c) 2020 yakuza tribe
+          {/* Permission is hereby granted, free of charge, to any person obtaining a copy
           of this software and associated documentation files (the "Software"), to deal
           in the Software without restriction, including without limitation the rights
           to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
@@ -47,7 +53,7 @@ export default function Home() {
           AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
           LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
           OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-          SOFTWARE.
+          SOFTWARE. */}
         </div>
       </main>      
     </div>
