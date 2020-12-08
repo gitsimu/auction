@@ -16,10 +16,11 @@ export const getNiceTime = (fromDate, toDate, levels, prefix) => {
   if (days > 7 || months > 0) {
     const 
       newDate = new Date(fromDate),
+      y = newDate.getFullYear(),
       m = newDate.getMonth() + 1,
       d = newDate.getDate()
 
-    return `${m > 9 ? m : '0' + m}/${d > 9 ? d : '0' + d}`    
+    return `${y}-${m > 9 ? m : '0' + m}-${d > 9 ? d : '0' + d}`    
   } else {
     return _getNiceTime(fromDate, toDate, levels, prefix)
   }

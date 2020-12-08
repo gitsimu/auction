@@ -10,6 +10,7 @@ function Bidding({...props}) {
     const valid = (value !== '' && re.test(value))
 
     set({value: value, valid: valid})
+    console.log('onChangePrice', {value: value, valid: valid})
   }
 
   return (
@@ -19,7 +20,7 @@ function Bidding({...props}) {
       </div>
       <div className="bidding-confirm" 
         onClick={() => {
-          if (price.vaild) { props.onConfirm1(price.value) }
+          if (price.valid) { props.onConfirm1(price.value) }
           else { alert('유효한 값이 아닙니다.') }
         }}
         ><div>입찰</div>

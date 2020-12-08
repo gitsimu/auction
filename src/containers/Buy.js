@@ -14,4 +14,4 @@ const mapStateToProps = state => ({
   info: state.info,
 })
 
-export default connect(mapStateToProps)(Sell)
+export default connect(mapStateToProps)(Buy)

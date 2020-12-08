@@ -14,6 +14,7 @@ import Item from '../components/Item'
 // ]
 
 function AuctionSearch({info, ...props}) {
+  const [loading, isLoading] = React.useState(false)
   const [category, setCategory] = React.useState(0)
   const [items, setItems] = React.useState([])
   const database = props.database
@@ -38,6 +39,8 @@ function AuctionSearch({info, ...props}) {
   }, [])
 
   React.useEffect(() => {
+    isLoading(true)
+    
     const ref = database.ref(`/Items`)
     ref.orderByChild('category').equalTo(`${category}`).on('value', snapshots => {
       const arr = []
@@ -46,6 +49,7 @@ function AuctionSearch({info, ...props}) {
         !isExpired && arr.push(snapshot.val())        
       })
       setItems(arr)
+      isLoading(false)
     })
 
     return () => { ref.off() }
@@ -75,14 +79,15 @@ function AuctionSearch({info, ...props}) {
             <div className="name">품명</div>
             <div className="info">설명</div>
             <div className="price1">입찰가</div>
-            <div className="price2">즉구가</div>            
+            <div className="price2">즉구가</div>
             <div className="time">만료</div>
             <div className="writer">게시자</div>            
           </div>
           <div className="auction-search-list">
             {items.map((m, i) => {
               return (<Item item={m} database={database} key={m.id} mine={false}/>)
-            })}  
+            })}
+            {loading && (<div id="loading"><div></div></div>)}
           </div>
         </div>        
       </div>

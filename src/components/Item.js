@@ -34,6 +34,8 @@ function Item({user, info, selectedItem, ...props}) {
   const database = props.database
   const mine = props.mine
 
+  console.log('info', info)
+
   const onBiddingConfirm1 = (price) => {
     let p =  parseInt(price),
         p1 = parseInt(item.price1),
@@ -61,7 +63,7 @@ function Item({user, info, selectedItem, ...props}) {
     })
     database.ref(`/Items/${item.id}/history/${biddingId}`).update({
       id: info.id,
-      userid: info.userid,
+      userinfo: info,
       price: p,
       timestamp: timestamp
     })
@@ -83,7 +85,8 @@ function Item({user, info, selectedItem, ...props}) {
         timestamp: 0
       })
       database.ref(`/Items/${item.id}/history/${biddingId}`).update({
-        userid: info.userid,
+        id: info.id,
+        userinfo: info,
         price: p2,
         timestamp: timestamp
       })
@@ -96,8 +99,7 @@ function Item({user, info, selectedItem, ...props}) {
       const time = (item.timestamp + 84600000 - new Date().getTime()) / 1000
       const hours = Math.floor(time / 3600)
       const minites = Math.floor(time % 3600 / 60)
-      const seconds = Math.floor(time % 3600 % 60)
-      // console.log(time, hours, minites, seconds)
+      const seconds = Math.floor(time % 3600 % 60)      
           
       setTime(time > 0 ? `${hours > 9 ? hours : '0' + hours}:${minites > 9 ? minites : '0' + minites}:${seconds > 9 ? seconds : '0' + seconds}` : '만료')
     }, 1000)
@@ -109,9 +111,9 @@ function Item({user, info, selectedItem, ...props}) {
     <>
       <div className={user.selectedItem === item.id ? "auction-search-list-item active" : "auction-search-list-item"}
         ref={body}
-        onClick={(e) => 
-          selectedItem(item.id)
-        }>
+        onClick={(e) => {
+          selectedItem(user.selectedItem === item.id ? undefined : item.id)
+        }}>
         <img src={thumbnail}></img>
         <div className="name">{name}</div>
         <div className="description">{item.description}</div>

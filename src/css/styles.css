@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
+
 /* width */
 ::-webkit-scrollbar {
   width: 7px;
@@ -22,13 +24,16 @@
 * {
   font-size: 14px;
 }
+body {
+  font-family: 'Noto Sans KR', sans-serif;
+}
 
 input[type="text"] {
   width: 100%;
   height: 34px;
-  background: rgb(78, 78, 78);
-  border-radius: 50px;
-  border: 1px solid rgb(60, 60, 60);
+  background: #333;
+  border-radius: 5px;
+  border: 1px solid #333;
   outline: none;
   padding: 5px 20px;
   color: #fff;
@@ -40,9 +45,9 @@ input[type="text"].invalid {
 select {
   height: 34px;
   width: 100%;
-  border-radius: 10px;
-  background: rgb(78, 78, 78);  
-  border: 1px solid rgb(60, 60, 60);
+  border-radius: 5px;
+  background: #333;  
+  border: 1px solid #333;
   color: #fff;
   outline: none;
   padding: 5px 10px;
@@ -51,9 +56,9 @@ textarea {
   resize: none;
   height: 100px;
   width: 100%;
-  border-radius: 10px;
-  background: rgb(78, 78, 78);  
-  border: 1px solid rgb(60, 60, 60);
+  border-radius: 5px;
+  background: #333;  
+  border: 1px solid #333;
   color: #fff;
   outline: none;
   padding: 5px 10px;
@@ -105,6 +110,9 @@ textarea {
 
 .auction-search-top {
   display: flex;  
+  position: absolute;
+  top: -50px;
+  left: 310px;
 }
 .auction-search-bottom {
   display: flex;
@@ -123,7 +131,11 @@ textarea {
   transition: 0.2s ease background;
 }
 .auction-search-category > div:hover {
-  background: #555;
+  background: #444;
+}
+.auction-search-body {
+  flex: 1;
+  padding-left: 10px;
 }
 
 .auction-search-list {
@@ -133,8 +145,7 @@ textarea {
   height: 500px;
   background: #333;
   border-radius: 10px;
-  font-size: 14px;
-  margin-left: 20px;
+  font-size: 14px;  
   overflow: auto;
 }
 .auction-search-list-item.header {  
@@ -143,8 +154,7 @@ textarea {
   align-items: center;
   justify-content: center;
   width: 100%;
-  padding: 10px 5px; 
-  margin-left: 20px;
+  padding: 10px 5px;     
 }
 .auction-search-list-item.header > div {    
   font-size: 14px;
@@ -158,14 +168,15 @@ textarea {
   justify-content: center;
   width: 100%;
   padding: 5px;  
+  border-radius: 10px;
 }
 .auction-search-list-item.active {
   background: #444 !important;
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
 }
 .auction-search-list-item:hover {
-  background: #555;
+  background: #444;
 }
 .auction-search-list-item > img {
   max-width: 50px;
@@ -269,7 +280,7 @@ textarea {
 }
 .bidding .bidding-input > input {
   width: 100%;
-  background: rgb(78, 78, 78);
+  background: #333;
   border-radius: 50px;
   border: 1px solid rgb(60, 60, 60);
   outline: none;
@@ -310,20 +321,21 @@ textarea {
   flex-direction: row;
   width: 100%;
   height: 100%; 
+  padding: 10px;
 }
 .add-items-info {
   width: 300px;
 }
 .add-items-info > div {
-  padding: 5px;
+  padding: 10px 0;
 }
 .add-items-price > div {
-  padding: 2px 0;
+  padding: 10px 0;
 }
 .my-items {
   flex: 1;
   height: 100%;
-  padding: 20px;
+  padding: 10px;
 }
 .my-items-list {
   height: 100%;
@@ -358,13 +370,71 @@ textarea {
 .history-item {
   display: flex;
   flex-direction: row;
-  padding: 10px;
+  margin: 10px;
 }
 .history-item > div {
-  padding: 0 10px;
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+}
+.history {
+  min-height: 100px;
+  background: #444;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  border-top: 1px solid #3a3a3a;
 }
 .history-empty {
   display: flex;
   align-items: center;
+  justify-content: center;  
+  height: 100px;
+}
+.bidder {
+  text-align: center;
+  display: flex;
+  align-items: center;
+  background-color: #333;
+  padding: 5px;
+  border-radius: 50px;
+}
+.bidder > img {
+  max-width: 25px;
+  max-height: 25px;
+  border-radius: 50%;
+  margin-right: 5px;
+}
+.bidder > span {
+  padding-right: 5px;
+}
+
+
+#loading {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  display: flex;
+  align-items: center;
   justify-content: center;
+  background: rgba(0,0,0,0.2);
+  border-radius: 5px;
+  z-index: 99;
+}
+#loading > div {
+  display: inline-block;
+  width: 50px;
+  height: 50px;
+  border: 3px solid rgba(255,255,255,.3);
+  border-radius: 50%;
+  border-top-color: #fff;
+  animation: spin 1s ease-in-out infinite;
+  -webkit-animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+  to { -webkit-transform: rotate(360deg); }
+}
+@-webkit-keyframes spin {
+  to { -webkit-transform: rotate(360deg); }
 }

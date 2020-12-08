@@ -8,10 +8,17 @@ function History({...props}) {
   return (
     <div className="history">
       {history.length > 0 && history.map((m) => {
-        return (
+        return (          
           <div className="history-item">
-            <div>{m.userid}</div>
-            <div>{m.price}</div>
+            <div>
+              <div className="bidder">
+                {m.userinfo && m.userinfo.id && m.userinfo.avatar && (
+                  <img src={`https://cdn.discordapp.com/avatars/${m.userinfo.id}/${m.userinfo.avatar}.png`}></img>
+                )}
+                <span>{m.userinfo.userid}</span>
+              </div>
+            </div>
+            <div>[입찰] {script.numberWithCommas(m.price)} vip</div>
             <div>{script.getNiceTime(m.timestamp, new Date(), 1, true)}</div>
           </div>
         )

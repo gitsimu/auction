@@ -23,6 +23,7 @@ import { CATEGORY, ITEMS } from '../js/global'
 // ]
 
 function Sell({info, ...props}) {
+  const [loading, isLoading] = React.useState(false)
   const [exhibitCategory, setExhibitCategory] = React.useState(0)
   const [exhibitItem, setExhibitItem] = React.useState(false)
   const [description, setDescription] = React.useState('')
@@ -31,37 +32,81 @@ function Sell({info, ...props}) {
   const [myItems, setMyItems] = React.useState([])
   const database = props.database
 
-  React.useEffect(() => {
-    // const items = database.ref(`/Users/${info.id}/Items`).orderByChild('timestamp')
-    const items = database.ref(`/Items`)
+  // React.useEffect(() => {
+  //   // const items = database.ref(`/Users/${info.id}/Items`).orderByChild('timestamp')
+  //   const items = database.ref(`/Items`)
 
-    Promise.resolve()
-      .then(() => {
-        return items.orderByChild('userid').equalTo(`${info.id}`).once('value')
-      })
-      .then((snapshots) => {
-        const arr = []
-        snapshots.forEach(snapshot => {
-          arr.push(snapshot.val())
-        })
-        setMyItems(arr)
+  //   Promise.resolve()
+  //     .then(() => {
+  //       return items.orderByChild('userid').equalTo(`${info.id}`).once('value')
+  //     })
+  //     .then((snapshots) => {
+  //       const arr = []
+  //       snapshots.forEach(snapshot => {
+  //         arr.push(snapshot.val())
+  //       })
+  //       setMyItems(arr)
 
-        const lastItem = arr.length > 0 ? arr[arr.length - 1] : {timestamp: 0}
-        return lastItem.timestamp
-      })
-      .then((lastTimestamp) => {
-        console.log('child_added')
-        const ref = items.startAt(lastTimestamp + 1)
-        ref.on('child_added', (snapshot) => {
-          const value = snapshot.val()
-          setItems(value)
-        })
+  //       const lastItem = arr.length > 0 ? arr[arr.length - 1] : {timestamp: 0}
+  //       return lastItem.timestamp
+  //     })
+  //     .then((lastTimestamp) => {
+  //       console.log('child_added')
+  //       const ref = items.startAt(lastTimestamp + 1)
+  //       ref.on('child_added', (snapshot) => {
+  //         const value = snapshot.val()
+  //         setItems(value)
+  //       })
 
-        return ref
-      })
+  //       return ref
+  //     })
     
-    return items.off()
+  //   return () => { items.off() }
+  // }, [])
+
+  // React.useEffect(() => {
+  //   isLoading(true)
+
+  //   const items = database.ref(`/Items`)
+  //   items.orderByChild('timestamp').equalTo(`${info.id}`).on('value', snapshots => {
+  //     const arr = []
+  //     snapshots.forEach(snapshot => {
+  //       arr.push(snapshot.val())   
+  //     })
+      
+  //     setItems(arr)
+  //     isLoading(false)
+  //   })
+
+  //   return () => { items.off() }
+  // }, [])
+
+  React.useEffect(() => {    
+    isLoading(true)
+    const items = database.ref(`/Items`)
+    items.orderByChild('userid').equalTo(`${info.id}`).on('value', (snapshots) => {
+      const arr = []
+      snapshots.forEach(snapshot => {
+        arr.push(snapshot.val())
+      })
+      arr.sort(compare)
+          
+      setMyItems(arr)
+      isLoading(false)
+    })   
+    
+    return () => { items.off() }
   }, [])
+
+  const compare = (a, b) => {
+    if ( a.timestamp < b.timestamp ){
+      return 1
+    }
+    if ( a.timestamp > b.timestamp ){
+      return -1
+    }
+    return 0
+  }
 
   const setItems = (newItems) => {
     if (newItems) {

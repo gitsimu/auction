@@ -53,7 +53,7 @@ function Main({info, connection}) {
           판매 관리
         </div>
         <div className={screen === 2 ? "container-menu-tab active" : "container-menu-tab"} onClick={() => { setScreen(2) }}>
-          판매 내역
+          구매 내역
         </div>
       </div>
       <div className="container-screen">
