@@ -14,55 +14,6 @@ function Sell({info, ...props}) {
   const [myItems, setMyItems] = React.useState([])
   const database = props.database
 
-  // React.useEffect(() => {
-  //   // const items = database.ref(`/Users/${info.id}/Items`).orderByChild('timestamp')
-  //   const items = database.ref(`/Items`)
-
-  //   Promise.resolve()
-  //     .then(() => {
-  //       return items.orderByChild('userid').equalTo(`${info.id}`).once('value')
-  //     })
-  //     .then((snapshots) => {
-  //       const arr = []
-  //       snapshots.forEach(snapshot => {
-  //         arr.push(snapshot.val())
-  //       })
-  //       setMyItems(arr)
-
-  //       const lastItem = arr.length > 0 ? arr[arr.length - 1] : {timestamp: 0}
-  //       return lastItem.timestamp
-  //     })
-  //     .then((lastTimestamp) => {
-  //       console.log('child_added')
-  //       const ref = items.startAt(lastTimestamp + 1)
-  //       ref.on('child_added', (snapshot) => {
-  //         const value = snapshot.val()
-  //         setItems(value)
-  //       })
-
-  //       return ref
-  //     })
-    
-  //   return () => { items.off() }
-  // }, [])
-
-  // React.useEffect(() => {
-  //   isLoading(true)
-
-  //   const items = database.ref(`/Items`)
-  //   items.orderByChild('timestamp').equalTo(`${info.id}`).on('value', snapshots => {
-  //     const arr = []
-  //     snapshots.forEach(snapshot => {
-  //       arr.push(snapshot.val())   
-  //     })
-      
-  //     setItems(arr)
-  //     isLoading(false)
-  //   })
-
-  //   return () => { items.off() }
-  // }, [])
-
   React.useEffect(() => {    
     isLoading(true)
     const items = database.ref(`/Items`)
@@ -159,7 +110,7 @@ function Sell({info, ...props}) {
             })}
           </select>
         </div>
-        {exhibitCategory !== null && (
+        {exhibitCategory !== null && exhibitCategory !== '5' && (
           <div>
             <div className="sub-title">항목</div>
             <select onChange={(v) => setExhibitItem(v.target.value)}>
@@ -170,12 +121,24 @@ function Sell({info, ...props}) {
                 }
               })}
             </select>
+          </div>          
+        )}
+        {exhibitCategory !== null && exhibitCategory === '5' && (
+          <div style={{display: 'flex'}}>
+            <div style={{flex: 1}}>
+              <div className="sub-title">레벨</div>
+              <input type="text"/>
+            </div>
+            <div style={{flex: 2, marginLeft: 5}}>
+              <div className="sub-title">페트이름</div>
+              <input type="text"/>
+            </div>
           </div>
         )}
 
         <div className="add-items-description">
           <div className="sub-title">설명</div>
-          <textarea onChange={(e) => {setDescription(e.target.value)}}></textarea>
+          <textarea onChange={(e) => {setDescription(e.target.value)}} placeholder="세부 옵션(10강, S/S, 페트 능력치 등등)"></textarea>
         </div>
 
         <div className="add-items-price">

@@ -85,14 +85,14 @@ function AuctionSearch({info, selectedItem, ...props}) {
           )}
         </div>
       </div>
-      <div className="auction-search-bottom">
+      <div className="auction-search-bottom">        
         <div className="auction-search-category">
           {CATEGORY.map((m, i) => {
             return (<div key={m.key} onClick={() => {setCategory(m.key)}}>{m.name}</div>)
           })}
         </div>
         <div className="auction-search-body">
-          <div className="auction-search-list-item header">
+          {/* <div className="auction-search-list-item header">
             <div style={{width: 50}}></div>
             <div className="name">품명</div>
             <div className="info">설명</div>
@@ -100,10 +100,11 @@ function AuctionSearch({info, selectedItem, ...props}) {
             <div className="price2">즉구가</div>
             <div className="time">만료</div>
             <div className="writer">게시자</div>            
-          </div>
+          </div> */}
+          <div className="sub-title">목록</div>
           <div className="auction-search-list">
             {items.map((m, i) => {
-              return (<Item item={m} database={database} key={m.id} mine={true}/>)
+              return (<Item item={m} database={database} key={m.id} mine={false}/>)
             })}
             {items.length === 0 && (
               <div className="auction-search-list-empty">상품이 없습니다.</div>

@@ -7,6 +7,7 @@ function History({...props}) {
   
   return (
     <div className="history">
+      <div className="sub-title">{`입찰 내역(${history.length})`}</div>
       {history.length > 0 && history.map((m) => {
         return (          
           <div className="history-item">

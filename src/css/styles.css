@@ -132,7 +132,7 @@ textarea {
   transition: 0.2s ease background;
 }
 .auction-search-category > div:hover {
-  background: #444;
+  background: rgba(0,0,0,0.2);
 }
 .auction-search-body {
   flex: 1;
@@ -177,15 +177,15 @@ textarea {
   justify-content: center;
   width: 100%;
   padding: 8px;  
-  border-radius: 10px;
+  /* border-radius: 10px; */
 }
 .auction-search-list-item.active {
-  background: #444 !important;
+  background: rgba(0,0,0,0.2) !important;
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
 }
 .auction-search-list-item:hover {
-  background: #444;
+  background: rgba(0,0,0,0.2);
 }
 .auction-search-list-item > img {
   max-width: 50px;
@@ -228,8 +228,17 @@ textarea {
   color: #777;
 }
 .auction-search-list-item > .time {
+  position: relative;
   width: 100px;
   text-align: center;
+}
+.auction-search-list-item > .time:before {
+  content: '남은시간';
+  position: absolute;
+  top: -12px;
+  left: 0;
+  font-size: 10px;
+  color: #777;
 }
 .auction-search-list-item > .time.timestate-1 {
   color: yellow;
@@ -242,7 +251,7 @@ textarea {
   display: flex;
   align-items: center;
 
-  background-color: #333;
+  background-color: rgba(0,0,0,0.1);
   padding: 5px;
   border-radius: 50px;
 }
@@ -250,7 +259,7 @@ textarea {
   max-width: 25px;
   max-height: 25px;
   border-radius: 50%;
-  margin-right: 5px;
+  margin-right: 10px;
 }
 .auction-search-list-item > .writer > span {
   padding-right: 5px;
@@ -261,7 +270,7 @@ textarea {
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid #444; */
+  border: 1px solid rgba(0,0,0,0.2); */
 }
 
 .auction-search-area {  
@@ -292,25 +301,25 @@ textarea {
 } */
 .auction-search-guide {
   position: absolute;
-  top: 30px;
-  background: #333;
+  top: 32px;
+  background: #222;
   color: #aaa;
   display: flex;
   flex-direction: column;
   max-height: 300px;
   width: 300px;
   overflow: auto;  
-  border-bottom-left-radius: 5px;
-  border-bottom-right-radius: 5px;
+  /* border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px; */
   z-index: 10;
   /* padding: 5px; */
 }
 .auction-search-guide > div {
-  padding: 5px 15px;
+  padding: 8px 20px;
   cursor: pointer;
 }
 .auction-search-guide > div:first-of-type {
-  border-top: 1px solid #272727;
+  /* border-top: 1px solid #272727; */
   padding-top: 10px;
 }
 .auction-search-guide > div:hover {
@@ -323,7 +332,7 @@ textarea {
   justify-content: flex-end;
   width: 100%;
   padding: 0 5px 5px 5px;
-  background: #444;
+  background: rgba(0,0,0,0.2);
   /* border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px; */
 }
@@ -379,7 +388,7 @@ textarea {
   display: flex;
   flex-direction: row;
   width: 100%;
-  height: 100%; 
+  /* height: 100%;  */
   padding: 10px;
 }
 .add-items-info {
@@ -398,9 +407,11 @@ textarea {
 }
 .my-items-list {
   /* height: 100%; */
+  position: relative;
   height: 500px;
   background: #333;
   border-radius: 10px;
+  overflow: auto;
 }
 
 .add-items-confirm {
@@ -430,31 +441,36 @@ textarea {
 .history-item {
   display: flex;
   flex-direction: row;
-  margin: 10px;
+  /* margin: 10px; */
 }
 .history-item > div {
   display: flex;
   align-items: center;
   padding: 0 20px;
+  font-size: 12px;
 }
 .history {
-  min-height: 100px;
-  background: #444;
-  border-bottom-left-radius: 10px;
-  border-bottom-right-radius: 10px;
-  border-top: 1px solid #3a3a3a;
+  min-height: 60px;
+  background: rgba(0,0,0,0.2);
+  /* border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px; */
+  /* border-top: 1px solid transparent; */
 }
 .history-empty {
   display: flex;
   align-items: center;
   justify-content: center;  
-  height: 100px;
+  height: 60px;
+}
+.history .sub-title {
+  font-size: 12px;
+  margin-left: 15px;
 }
 .bidder {
   text-align: center;
   display: flex;
   align-items: center;
-  background-color: #333;
+  background-color: rgba(0,0,0,0.1);
   padding: 5px;
   border-radius: 50px;
 }
@@ -462,7 +478,7 @@ textarea {
   max-width: 25px;
   max-height: 25px;
   border-radius: 50%;
-  margin-right: 5px;
+  margin-right: 10px;
 }
 .bidder > span {
   padding-right: 5px;
@@ -478,6 +494,7 @@ textarea {
   justify-content: flex-end;
   color: #777;
   border-bottom: 1px solid #333;
+  margin-bottom: 3px;
 }
 .buy-total > span {
   color: #fff;
@@ -492,7 +509,13 @@ textarea {
   font-size: 12px; */
 }
 .buy-items {
-
+  overflow: auto;
+}
+.buy-items-empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 500px;
 }
 
 
