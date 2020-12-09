@@ -1,41 +1,19 @@
 import React from 'react'
 import { connect } from 'react-redux'
-
+import { selectedItem } from '../actions'
 import { CATEGORY, ITEMS } from '../js/global'
 import Item from '../components/Item'
 
-// const CATEGORY = [
-//   {key: 0, name: 'weapon'},
-//   {key: 1, name: 'armor'},
-//   {key: 2, name: 'accessary'},
-//   {key: 3, name: 'consumable'},
-//   {key: 4, name: 'etc'},
-//   {key: 5, name: 'minions'},
-// ]
-
-function AuctionSearch({info, ...props}) {
+function AuctionSearch({info, selectedItem, ...props}) {
   const [loading, isLoading] = React.useState(false)
   const [category, setCategory] = React.useState(0)
   const [items, setItems] = React.useState([])
+  const [searchKeyword, setSearchKeyword] = React.useState()
+  const [searchKeywordGuide, setSearchKeywordGuide] = React.useState('')
   const database = props.database
 
   React.useEffect(() => {
     console.log('info', info)
-
-    // const arr = []
-    // for(let i = 0; i < 5; i++) {
-    //   arr.push({
-    //     id: `test-${i}`,
-    //     thumbnail: 'https://chat.smlog.co.kr/resources/icon_bubble_256.png',
-    //     key: i,
-    //     info: '+ 10 Enhanced',
-    //     price1: 20000000,
-    //     price2: 30000000,
-    //     timestamp: 1605840669702,
-    //     writer: `[nonamed-${i}]`
-    //   })
-    // }    
-    // setItems(arr)
   }, [])
 
   React.useEffect(() => {
@@ -59,12 +37,52 @@ function AuctionSearch({info, ...props}) {
     // console.log('rerendering', items)
   }, [category, items])
 
+  React.useEffect(() => {
+    const ref = database.ref(`/Items`)
+    const item = ITEMS.filter((item) => { return item.name === searchKeyword })
+    if (!searchKeyword || searchKeyword === '') {
+      setCategory(0)
+    } else if (item.length > 0) {
+      isLoading(true)      
+      ref.orderByChild('key').equalTo(`${item[0].key}`).on('value', snapshots => {
+        const arr = []
+        snapshots.forEach(snapshot => {
+          const isExpired = new Date().getTime() - snapshot.val().timestamp > 84600000;
+          !isExpired && arr.push(snapshot.val())
+        })
+        setItems(arr)
+        setSearchKeywordGuide('')
+        selectedItem(undefined)
+        isLoading(false)
+      })
+    } else {
+      alert(`[${searchKeyword}] 정보가 없습니다.\n다시 한 번 시도해주세요.`)
+    }
+
+    return () => { ref.off() }
+  }, [searchKeyword])
+
+  React.useEffect(() => {
+  }, [searchKeywordGuide])
+
   return (
     <div className="auction-search">
       <div className="auction-search-top">
         <div className="auction-search-area">
-          <input type="text" className="auction-search-input"></input>
-          <div className="auction-search-input-button">검색</div>
+          <i className="icon-magnifier"></i>
+          <input 
+            type="text" 
+            className="auction-search-input"
+            onChange={(e) => { setSearchKeywordGuide(e.target.value) }}
+            onKeyPress={(e) => { e.key === "Enter" && setSearchKeyword(e.target.value) }}>
+          </input>          
+          {searchKeywordGuide && searchKeywordGuide.length > 1 && (
+            <div className="auction-search-guide">              
+              {ITEMS.filter((item) => { return item.name.indexOf(searchKeywordGuide) > -1 }).map((m) => {
+                return (<div onClick={() => {setSearchKeyword(m.name)} }>{m.name}</div>)
+              })}            
+            </div>
+          )}
         </div>
       </div>
       <div className="auction-search-bottom">
@@ -85,7 +103,7 @@ function AuctionSearch({info, ...props}) {
           </div>
           <div className="auction-search-list">
             {items.map((m, i) => {
-              return (<Item item={m} database={database} key={m.id} mine={false}/>)
+              return (<Item item={m} database={database} key={m.id} mine={true}/>)
             })}
             {items.length === 0 && (
               <div className="auction-search-list-empty">상품이 없습니다.</div>
@@ -102,4 +120,8 @@ const mapStateToProps = state => ({
   info: state.info,
 })
 
-export default connect(mapStateToProps)(AuctionSearch)
+const mapDispatchToProps = dispatch => ({
+  selectedItem: i => dispatch(selectedItem(i))
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(AuctionSearch)

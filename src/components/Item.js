@@ -6,29 +6,12 @@ import * as script from '../js/script'
 import { CATEGORY, ITEMS } from '../js/global'
 import Bidding from '../components/Bidding'
 import History from '../components/History'
+import Timer from '../components/Timer'
 
-// const CATEGORY = [
-//   {key: 0, name: 'weapon'},
-//   {key: 1, name: 'armor'},
-//   {key: 2, name: 'accessary'},
-//   {key: 3, name: 'consumable'},
-//   {key: 4, name: 'etc'},
-//   {key: 5, name: 'minions'},
-// ]
-// const ITEMS = [
-//   {key: 0, category: 0, name: 'item 0', thumbnail: 'https://chat.smlog.co.kr/resources/icon_bubble_256.png'},
-//   {key: 1, category: 1, name: 'item 1', thumbnail: 'https://chat.smlog.co.kr/resources/icon_bubble_256.png'},
-//   {key: 2, category: 2, name: 'item 2', thumbnail: 'https://chat.smlog.co.kr/resources/icon_bubble_256.png'},
-//   {key: 3, category: 3, name: 'item 3', thumbnail: 'https://chat.smlog.co.kr/resources/icon_bubble_256.png'},
-//   {key: 4, category: 4, name: 'item 4', thumbnail: 'https://chat.smlog.co.kr/resources/icon_bubble_256.png'},
-//   {key: 5, category: 5, name: 'item 5', thumbnail: 'https://chat.smlog.co.kr/resources/icon_bubble_256.png'},
-// ]
-
-function Item({user, info, selectedItem, ...props}) {    
-  const [time, setTime] = React.useState('-')
+function Item({user, info, selectedItem, ...props}) {      
   const body = React.useRef(null)
   const item = props.item
-  const itemInfo = ITEMS.filter((i) => { return parseInt(i.key) === parseInt(item.key)});
+  const itemInfo = ITEMS.filter((i) => { return parseInt(i.key) === parseInt(item.key)})
   const name = itemInfo.length > 0 ? itemInfo[0].name : 'unknown'
   const thumbnail = itemInfo.length > 0 ? itemInfo[0].thumbnail : 'https://chat.smlog.co.kr/resources/icon_bubble_256.png'      
   const database = props.database
@@ -68,6 +51,7 @@ function Item({user, info, selectedItem, ...props}) {
       timestamp: timestamp
     })
     database.ref(`/Users/${info.id}/buy/${item.id}`).update({
+      item: item,
       price: p,
       timestamp: timestamp
     })
@@ -94,19 +78,6 @@ function Item({user, info, selectedItem, ...props}) {
     }
   }
 
-  React.useEffect(() => {
-    const interval = setInterval(() => {      
-      const time = (item.timestamp + 84600000 - new Date().getTime()) / 1000
-      const hours = Math.floor(time / 3600)
-      const minites = Math.floor(time % 3600 / 60)
-      const seconds = Math.floor(time % 3600 % 60)      
-          
-      setTime(time > 0 ? `${hours > 9 ? hours : '0' + hours}:${minites > 9 ? minites : '0' + minites}:${seconds > 9 ? seconds : '0' + seconds}` : '만료')
-    }, 1000)
-
-    return () => {clearInterval(interval)}
-  }, [item])
-
   return (
     <>
       <div className={user.selectedItem === item.id ? "auction-search-list-item active" : "auction-search-list-item"}
@@ -119,7 +90,7 @@ function Item({user, info, selectedItem, ...props}) {
         <div className="description">{item.description}</div>
         <div className="price1">{script.numberWithCommas(item.price1)}</div>
         <div className="price2">{script.numberWithCommas(item.price2)}</div>
-        <div className="time">{time}</div>
+        <Timer timestamp={item.timestamp}/>        
         <div className="writer">
           {item.discord && item.discord.id && item.discord.avatar && (
             <img src={`https://cdn.discordapp.com/avatars/${item.discord.id}/${item.discord.avatar}.png`}></img>
@@ -132,7 +103,7 @@ function Item({user, info, selectedItem, ...props}) {
       {!mine && user.selectedItem === item.id && (
         <Bidding price={item.price1} onConfirm1={onBiddingConfirm1} onConfirm2={onBiddingConfirm2}/>
       )}
-      {mine && user.selectedItem === item.id && (
+      {user.selectedItem === item.id && (
         <History history={item.history}/>
       )}
     </>

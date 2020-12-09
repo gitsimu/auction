@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
-import { connection } from '../src/actions'
+import { connection, selectedItem } from '../src/actions'
 
 import AuctionSearch from '../src/containers/AuctionSearch'
 import Sell from '../src/containers/Sell'
@@ -15,7 +15,7 @@ import * as script from '../src/js/script'
 
 // https://medium.com/@orels1/using-discord-oauth2-a-simple-guide-and-an-example-nodejs-app-71a9e032770
 
-function Main({info, connection}) {
+function Main({info, selectedItem, connection}) {
   const [screen, setScreen] = useState(0)
 
   if (!firebase.apps.length) {
@@ -24,9 +24,7 @@ function Main({info, connection}) {
   const database = firebase.database()
 
   useEffect(() => {
-    console.log('start')
-
-    // 
+    console.log('start')    
     const accessToken = script.getCookie('discord_access_token')
     const tokenType = script.getCookie('discord_token_type')
     
@@ -39,9 +37,21 @@ function Main({info, connection}) {
           connection(response)		  		
 		  	})
         .catch(console.error)
+    } else {
+
     }
-          
+
+    // simpleline icons
+    let simplelineLink = document.createElement("link")
+    simplelineLink.href = "https://cdnjs.cloudflare.com/ajax/libs/simple-line-icons/2.4.1/css/simple-line-icons.min.css"
+    simplelineLink.rel = "stylesheet"
+    simplelineLink.type = "text/css"
+    document.querySelector('body').appendChild(simplelineLink)          
   }, [])
+
+  useEffect(() => {
+    selectedItem(undefined)
+  }, [screen])
 
   return (
     <div className="auction-main">
@@ -76,7 +86,8 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  connection: (info) => dispatch(connection(info))
+  connection: (info) => dispatch(connection(info)),
+  selectedItem: i => dispatch(selectedItem(i))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Main)

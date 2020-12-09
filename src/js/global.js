@@ -313,7 +313,6 @@ export const ITEMS = [
   {key:303, category:1, name:'호수의 갑옷', thumbnail:'/images/item/303.jpg'},
   {key:304, category:0, name:'호수의 창', thumbnail:'/images/item/304.jpg'},
 
-  {key:304, category:0, name:'호수의 창', thumbnail:'/images/item/304.jpg'},
 ]
 
 

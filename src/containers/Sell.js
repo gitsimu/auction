@@ -4,24 +4,6 @@ import firebase from 'firebase/app'
 import Item from '../components/Item'
 import { CATEGORY, ITEMS } from '../js/global'
 
-// const CATEGORY = [
-//   {key: 0, name: 'weapon'},
-//   {key: 1, name: 'armor'},
-//   {key: 2, name: 'accessary'},
-//   {key: 3, name: 'consumable'},
-//   {key: 4, name: 'etc'},
-//   {key: 5, name: 'minions'},
-// ]
-
-// const ITEMS = [
-//   {key: 0, category: 0, name: 'item 0', thumbnail: 'https://chat.smlog.co.kr/resources/icon_bubble_256.png'},
-//   {key: 1, category: 1, name: 'item 1', thumbnail: 'https://chat.smlog.co.kr/resources/icon_bubble_256.png'},
-//   {key: 2, category: 2, name: 'item 2', thumbnail: 'https://chat.smlog.co.kr/resources/icon_bubble_256.png'},
-//   {key: 3, category: 3, name: 'item 3', thumbnail: 'https://chat.smlog.co.kr/resources/icon_bubble_256.png'},
-//   {key: 4, category: 4, name: 'item 4', thumbnail: 'https://chat.smlog.co.kr/resources/icon_bubble_256.png'},
-//   {key: 5, category: 5, name: 'item 5', thumbnail: 'https://chat.smlog.co.kr/resources/icon_bubble_256.png'},
-// ]
-
 function Sell({info, ...props}) {
   const [loading, isLoading] = React.useState(false)
   const [exhibitCategory, setExhibitCategory] = React.useState(0)
@@ -117,15 +99,18 @@ function Sell({info, ...props}) {
   }
 
   const addItems = React.useCallback(() => {
-    handleAddItems(
-      exhibitCategory,
-      exhibitItem,
-      description,
-      price1.value,
-      price2.value,
-    )
-
-    alert('등록되었습니다.')
+    if (myItems.length >= 10) {
+      alert('최대 10개까지 등록할 수 있습니다.\n만료된 물건을 삭제 후 다시 시도해주세요.')
+    } else {
+      handleAddItems(
+        exhibitCategory,
+        exhibitItem,
+        description,
+        price1.value,
+        price2.value,
+      )
+      alert('등록되었습니다.')
+    }    
   }, [exhibitCategory, exhibitItem, description, price1, price2])
 
   const handleAddItems = (category, key, description, price1, price2) => {
@@ -215,6 +200,7 @@ function Sell({info, ...props}) {
           {myItems.map((m) => {
             return (<Item item={m} database={database} key={m.id} mine={true}/>)
           })}
+          {loading && (<div id="loading"><div></div></div>)}
         </div>
       </div>
     </div>
