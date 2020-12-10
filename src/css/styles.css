@@ -192,6 +192,20 @@ textarea {
   max-height: 50px;
   border-radius: 10px;
 }
+.auction-search-list-item > .icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 50px;
+  border-radius: 10px;
+  background: rgba(0,0,0,0.5);
+}
+.auction-search-list-item > .icon i {
+  font-size: 22px;
+  font-weight: bold;
+  color: #fff;
+}
 .auction-search-list-item > .name, 
 .auction-search-list-item > .description {
   flex: 1;
@@ -246,7 +260,11 @@ textarea {
 .auction-search-list-item > .time.timestate-2 {
   color: red;
 }
+.auction-search-list-item > .time.timestate-3 {
+  color: #999;
+}
 .auction-search-list-item > .writer {
+  position: relative;
   text-align: center;
   display: flex;
   align-items: center;
@@ -263,14 +281,27 @@ textarea {
 }
 .auction-search-list-item > .writer > span {
   padding-right: 5px;
-  /* background-color: #333;
-  padding: 0 10px;
-  border-radius: 5px;
-  height: 30px;
+}
+.auction-search-list-item .delete-item {
+  display: none;
+}
+.auction-search-list-item:hover .delete-item {
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid rgba(0,0,0,0.2); */
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  color: #fff;
+  background: #222;
+  cursor: pointer;
+  z-index: 1;  
+}
+.delete-item:hover {
+  color: #c62828 !important;
+  text-decoration: underline;
 }
 
 .auction-search-area {  
@@ -412,6 +443,16 @@ textarea {
   background: #333;
   border-radius: 10px;
   overflow: auto;
+}
+.my-items-list-empty {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;  
 }
 
 .add-items-confirm {

@@ -10,12 +10,19 @@ import Timer from '../components/Timer'
 
 function Item({user, info, selectedItem, ...props}) {      
   const body = React.useRef(null)
-  const item = props.item
-  const itemInfo = ITEMS.filter((i) => { return parseInt(i.key) === parseInt(item.key)})
-  const name = itemInfo.length > 0 ? itemInfo[0].name : 'unknown'
-  const thumbnail = itemInfo.length > 0 ? itemInfo[0].thumbnail : 'https://chat.smlog.co.kr/resources/icon_bubble_256.png'      
   const database = props.database
   const mine = props.mine
+  const item = props.item
+  const itemInfo = ITEMS.filter((i) => { return parseInt(i.key) === parseInt(item.key)})  
+  let name = itemInfo.length > 0 ? itemInfo[0].name : 'unknown'
+  let thumbnail = itemInfo.length > 0 ? itemInfo[0].thumbnail : undefined
+  const [expired, isExpired] = React.useState(false)
+
+  // category 5 : pet
+  if (item.category === '5') {
+    console.log('item', item)
+    name = `[Lv.${item.level}] ${item.key}`
+  }
 
   console.log('info', info)
 
@@ -65,7 +72,7 @@ function Item({user, info, selectedItem, ...props}) {
       const timestamp = firebase.database.ServerValue.TIMESTAMP
 
       database.ref(`/Items/${item.id}`).update({
-        price1: p2,      
+        price1: p2,
         timestamp: 0
       })
       database.ref(`/Items/${item.id}/history/${biddingId}`).update({
@@ -78,24 +85,35 @@ function Item({user, info, selectedItem, ...props}) {
     }
   }
 
+  const onDeleteItems = (itemId) => {
+    database.ref(`/Items/${itemId}`).remove()
+  }
+
   return (
     <>
       <div className={user.selectedItem === item.id ? "auction-search-list-item active" : "auction-search-list-item"}
         ref={body}
-        onClick={(e) => {
-          selectedItem(user.selectedItem === item.id ? undefined : item.id)
-        }}>
-        <img src={thumbnail}></img>
+        onClick={(e) => { selectedItem(user.selectedItem === item.id ? undefined : item.id) }}>
+        {thumbnail && (
+          <img src={thumbnail}></img>
+        )}
+        {!thumbnail && (
+          <div className="icon"><i className="icon-ghost"></i></div>
+        )}
         <div className="name">{name}</div>
         <div className="description">{item.description}</div>
         <div className="price1">{script.numberWithCommas(item.price1)}</div>
-        <div className="price2">{script.numberWithCommas(item.price2)}</div>
-        <Timer timestamp={item.timestamp}/>        
+        <div className="price2">{script.numberWithCommas(item.price2)}</div>        
+        <Timer timestamp={item.timestamp} isExpired={isExpired}/>        
         <div className="writer">
           {item.discord && item.discord.id && item.discord.avatar && (
             <img src={`https://cdn.discordapp.com/avatars/${item.discord.id}/${item.discord.avatar}.png`}></img>
           )}
           <span>{item.discord.userid}</span>
+          
+          {expired && info.id === item.discord.id && (
+            <div className="delete-item" onClick={() => {onDeleteItems(item.id)}}>Delete</div>
+          )}
         </div>        
         {/* <div className="time">{script.getNiceTime(item.timestamp, new Date(), 1, true)}</div> */}
       </div>

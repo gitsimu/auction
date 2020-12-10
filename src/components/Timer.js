@@ -4,24 +4,28 @@ import React from 'react'
 function Timer({...props}) {
   const [time, setTime] = React.useState('-')
   const [timeState, setTimeState] = React.useState(0)
-  const timestamp = props.timestamp
+  const timestamp = props.timestamp  
+  const isExpired = props.isExpired
 
-  React.useEffect(() => {
+  React.useEffect(() => {    
     const interval = setInterval(() => {      
       const time = (timestamp + 84600000 - new Date().getTime()) / 1000
       const hours = Math.floor(time / 3600)
       const minites = Math.floor(time % 3600 / 60)
       const seconds = Math.floor(time % 3600 % 60)      
           
-      setTime(time > 0 ? `${hours > 9 ? hours : '0' + hours}:${minites > 9 ? minites : '0' + minites}:${seconds > 9 ? seconds : '0' + seconds}` : '만료')
+      setTime(time > 0 ? `${hours > 9 ? hours : '0' + hours}:${minites > 9 ? minites : '0' + minites}:${seconds > 9 ? seconds : '0' + seconds}` : '만료')      
 
-      if (hours < 3) {
+      if (hours > 2) {
+        setTimeState(0)
+      } else if (hours > 1) {
         setTimeState(1)
-      } else if (hours < 1) {
+      } else if (hours > 0) {
         setTimeState(2)
       } else {
-        setTimeState(0)
-      }
+        setTimeState(3)
+        isExpired(true)
+      }      
     }, 1000)
 
     return () => { clearInterval(interval) }

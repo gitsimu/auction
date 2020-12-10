@@ -34,17 +34,14 @@ function AuctionSearch({info, selectedItem, ...props}) {
   }, [category])
 
   React.useEffect(() => {
-    // console.log('rerendering', items)
-  }, [category, items])
-
-  React.useEffect(() => {
     const ref = database.ref(`/Items`)
     const item = ITEMS.filter((item) => { return item.name === searchKeyword })
     if (!searchKeyword || searchKeyword === '') {
       setCategory(0)
-    } else if (item.length > 0) {
-      isLoading(true)      
-      ref.orderByChild('key').equalTo(`${item[0].key}`).on('value', snapshots => {
+    } else {
+      isLoading(true)
+      const keyword = item.length > 0 ? item[0].key : searchKeyword
+      ref.orderByChild('key').equalTo(keyword).on('value', snapshots => {
         const arr = []
         snapshots.forEach(snapshot => {
           const isExpired = new Date().getTime() - snapshot.val().timestamp > 84600000;
@@ -55,9 +52,8 @@ function AuctionSearch({info, selectedItem, ...props}) {
         selectedItem(undefined)
         isLoading(false)
       })
-    } else {
-      alert(`[${searchKeyword}] 정보가 없습니다.\n다시 한 번 시도해주세요.`)
-    }
+    } 
+    // else { alert(`[${searchKeyword}] 정보가 없습니다.\n다시 한 번 시도해주세요.`) }    
 
     return () => { ref.off() }
   }, [searchKeyword])
