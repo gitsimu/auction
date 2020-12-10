@@ -35,7 +35,7 @@ export default function Home() {
           이 페이지는 FRESH 스톤에이지 사용자들을 위해 만들어졌습니다.<br/>
           FRESH AUCTION 사용에 있어 발생하는 문제에 대한 책임은 전적으로 사용자에게 있으며,<br/>
           이로 인해 발생하는 이슈 및 유저 간의 마찰에 대해서는 책임지지 않습니다.<br/>
-          또한, FRESH 스톤에이지 운영진분들과는 전혀 연관이 없음을 알려드립니다.<br/><br/>
+          또한, FRESH 스톤에이지 운영진과는 전혀 연관이 없음을 알려드립니다.<br/><br/>
           Copyright (c) 2020 solnreo
           {/* Permission is hereby granted, free of charge, to any person obtaining a copy
           of this software and associated documentation files (the "Software"), to deal

@@ -38,7 +38,7 @@ function Main({info, selectedItem, connection}) {
 		  	})
         .catch(console.error)
     } else {
-
+      window.location = '/'
     }
 
     // simpleline icons
