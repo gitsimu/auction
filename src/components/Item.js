@@ -107,7 +107,7 @@ function Item({user, info, selectedItem, ...props}) {
         <div className="price1">{script.numberWithCommas(item.price1)}</div>
         <div className="price2">{script.numberWithCommas(item.price2)}</div>
         <Timer timestamp={item.timestamp} isExpired={isExpired}/>
-        <User item={item.discord} onDeleteItems={onDeleteItems} expired={expired}/>
+        <User userinfo={item.discord} onDeleteItems={onDeleteItems} expired={expired} item={item.id}/>
       </div>
       {/* {console.log(user.selectedItem, item.id)} */}
       {!mine && user.selectedItem === item.id && (

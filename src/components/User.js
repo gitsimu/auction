@@ -3,18 +3,19 @@ import { connect } from 'react-redux'
 // import * as script from '../js/script'
 
 function User({user, info, ...props}) {
-  const item = props.item
+  const userinfo = props.userinfo
   const expired = props.expired
   const onDeleteItems = props.onDeleteItems  
+  const item = props.item
 
   return (
     <div className="user">
-      {item && item.id && item.avatar && (
-        <img src={`https://cdn.discordapp.com/avatars/${item.id}/${item.avatar}.png`}></img>
+      {item && userinfo.id && userinfo.avatar && (
+        <img src={`https://cdn.discordapp.com/avatars/${userinfo.id}/${userinfo.avatar}.png`}></img>
       )}
-      <span>{item.userid}</span>
-      {expired && info.id === item.id && (
-        <div className="delete-item" onClick={() => {onDeleteItems(item.id)}}>Delete</div>
+      <span>{userinfo.userid}</span>
+      {expired && item && info.id === userinfo.id && (
+        <div className="delete-item" onClick={() => {onDeleteItems(item)}}>Delete</div>
       )}
     </div>
   )

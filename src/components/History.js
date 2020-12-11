@@ -20,10 +20,11 @@ function History({...props}) {
     <div className="history">
       <div className="sub-title">{`입찰 내역(${history.length})`}</div>
       {history.length > 0 && history.sort(compare).map((m, i) => {
+        console.log('m', m);
         return (          
           <div className={i == 0 ? 'history-item first' : 'history-item'}>
             <div>
-              <User item={m.userinfo} expired={false}/>
+              <User userinfo={m.userinfo} expired={false}/>
               {/* <div className="bidder">
                 {m.userinfo && m.userinfo.id && m.userinfo.avatar && (
                   <img src={`https://cdn.discordapp.com/avatars/${m.userinfo.id}/${m.userinfo.avatar}.png`}></img>
