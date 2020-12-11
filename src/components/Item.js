@@ -7,6 +7,7 @@ import { CATEGORY, ITEMS } from '../js/global'
 import Bidding from '../components/Bidding'
 import History from '../components/History'
 import Timer from '../components/Timer'
+import User from '../components/User'
 
 function Item({user, info, selectedItem, ...props}) {      
   const body = React.useRef(null)
@@ -32,17 +33,15 @@ function Item({user, info, selectedItem, ...props}) {
         p2 = parseInt(item.price2)
 
     if (p < p1 + 100) {
-      alert('최소 입찰단위는 100vip 입니다.')
+      alert(`${p1 + 100}vip 부터 입찰할 수 있습니다.`)
       return
     } else if (p > p2) {
-      const result = confirm(`즉구가(${script.numberWithCommas(p2)})보다 높은 가격입니다.\n즉구가로 진행하시겠습니까?`)
-      if (result) {
-        p = p2
-      }
+      const result = confirm(`즉구가(${script.numberWithCommas(p2)})보다 높은 가격입니다.\n계속하시겠습니까?`)
+      if (result) {}
       else {
         return
       }
-    } 
+    }
     
     const biddingId = Math.random().toString(36).substr(2, 9)
     const timestamp = firebase.database.ServerValue.TIMESTAMP
@@ -65,13 +64,16 @@ function Item({user, info, selectedItem, ...props}) {
     alert('입찰하였습니다.')
   }
   const onBiddingConfirm2 = () => {
-    if (confirm(`즉구가(${script.numberWithCommas(p2)})로 구매하시겠습니까?`)) {      
-      let p2 = parseInt(item.price2)
-
+    let p1 = parseInt(item.price1)
+    let p2 = parseInt(item.price2)
+    if (p1 > p2) {
+      alert('진행 중인 입찰가가 즉구가를 상회하였습니다.\n일반 입찰로 진행해주세요.')
+    } else if (confirm(`즉구가(${script.numberWithCommas(p2)})로 구매하시겠습니까?`)) {            
       const biddingId = Math.random().toString(36).substr(2, 9)
       const timestamp = firebase.database.ServerValue.TIMESTAMP
 
       database.ref(`/Items/${item.id}`).update({
+        state: 0,
         price1: p2,
         timestamp: 0
       })
@@ -103,19 +105,9 @@ function Item({user, info, selectedItem, ...props}) {
         <div className="name">{name}</div>
         <div className="description">{item.description}</div>
         <div className="price1">{script.numberWithCommas(item.price1)}</div>
-        <div className="price2">{script.numberWithCommas(item.price2)}</div>        
-        <Timer timestamp={item.timestamp} isExpired={isExpired}/>        
-        <div className="writer">
-          {item.discord && item.discord.id && item.discord.avatar && (
-            <img src={`https://cdn.discordapp.com/avatars/${item.discord.id}/${item.discord.avatar}.png`}></img>
-          )}
-          <span>{item.discord.userid}</span>
-          
-          {expired && info.id === item.discord.id && (
-            <div className="delete-item" onClick={() => {onDeleteItems(item.id)}}>Delete</div>
-          )}
-        </div>        
-        {/* <div className="time">{script.getNiceTime(item.timestamp, new Date(), 1, true)}</div> */}
+        <div className="price2">{script.numberWithCommas(item.price2)}</div>
+        <Timer timestamp={item.timestamp} isExpired={isExpired}/>
+        <User item={item.discord} onDeleteItems={onDeleteItems} expired={expired}/>
       </div>
       {/* {console.log(user.selectedItem, item.id)} */}
       {!mine && user.selectedItem === item.id && (

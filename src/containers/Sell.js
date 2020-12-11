@@ -129,7 +129,7 @@ function Sell({info, ...props}) {
 
   return (
     <div className="add-items">
-      <div className="add-items-info">        
+      <div className="add-items-info">
         <div>
           <div className="sub-title">유형</div>
           <select onChange={(v) => setExhibitCategory(v.target.value)}>

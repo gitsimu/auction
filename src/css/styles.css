@@ -204,12 +204,15 @@ textarea {
 .auction-search-list-item > .icon i {
   font-size: 22px;
   font-weight: bold;
-  color: #fff;
+  color: #ccc;
 }
 .auction-search-list-item > .name, 
 .auction-search-list-item > .description {
   flex: 1;
   padding: 0 10px;
+  font-size: 13px;
+  max-height: 50px;
+  overflow-y: auto;
 }
 .auction-search-list-item > .info { 
   flex: 1;
@@ -263,7 +266,7 @@ textarea {
 .auction-search-list-item > .time.timestate-3 {
   color: #999;
 }
-.auction-search-list-item > .writer {
+.user {
   position: relative;
   text-align: center;
   display: flex;
@@ -273,14 +276,18 @@ textarea {
   padding: 5px;
   border-radius: 50px;
 }
-.auction-search-list-item > .writer > img {
+.user > img {
   max-width: 25px;
   max-height: 25px;
   border-radius: 50%;
   margin-right: 10px;
 }
-.auction-search-list-item > .writer > span {
+.user > span {
   padding-right: 5px;
+  max-width: 100px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 .auction-search-list-item .delete-item {
   display: none;
@@ -297,7 +304,8 @@ textarea {
   color: #fff;
   background: #222;
   cursor: pointer;
-  z-index: 1;  
+  z-index: 1;
+  border-radius: 50px;
 }
 .delete-item:hover {
   color: #c62828 !important;
@@ -482,20 +490,23 @@ textarea {
 .history-item {
   display: flex;
   flex-direction: row;
-  /* margin: 10px; */
+  padding: 3px;
+  color: #777;
+  animation: fade-in-from-right .3s linear alternate forwards;
+}
+.history-item.first {
+  color: #fff;
 }
 .history-item > div {
   display: flex;
   align-items: center;
   padding: 0 20px;
   font-size: 12px;
+  min-width: 20%;
 }
 .history {
   min-height: 60px;
   background: rgba(0,0,0,0.2);
-  /* border-bottom-left-radius: 10px;
-  border-bottom-right-radius: 10px; */
-  /* border-top: 1px solid transparent; */
 }
 .history-empty {
   display: flex;
@@ -584,8 +595,39 @@ textarea {
 }
 
 @keyframes spin {
-  to { -webkit-transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 @-webkit-keyframes spin {
-  to { -webkit-transform: rotate(360deg); }
+  0% {
+    -webkit-transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+  }
+}
+
+@keyframes fade-in-from-right {
+  0% {
+    transform: translateX(30px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+@-webkit-keyframes fade-in-from-right {
+  0% {
+    -webkit-transform: translateX(30px);
+    opacity: 0;
+  }
+  100% {
+    -webkit-transform: translateX(0);
+    opacity: 1;
+  }
 }
