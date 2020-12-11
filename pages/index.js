@@ -7,8 +7,8 @@ import FirebaseConfig from '../firebaseConfig'
 import DiscordConfig from '../discordConfig'
 
 export default function Home() {
-  const CLIENT_ID = '767649418148446248'
-  const redirect = encodeURIComponent('/localhost:3000/main')
+  const href = `https://discord.com/api/oauth2/authorize?client_id=767649418148446248&redirect_uri=http%3A%2F%2F13.125.119.95%2Fcallback.html&response_type=token&scope=identify`;
+  // `https://discord.com/api/oauth2/authorize?client_id=767649418148446248&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fcallback.html&response_type=token&scope=identify%20email%20connections`
   return (
     <div className={styles.container}>
       <Head>
@@ -24,7 +24,7 @@ export default function Home() {
             FRESH AUCTION
             <div className={styles.badge}>Beta</div>
           </div>
-          <a className={styles.login} href={`https://discord.com/api/oauth2/authorize?client_id=767649418148446248&redirect_uri=http%3A%2F%2F13.125.119.95%2Fcallback.html&response_type=code&scope=identify`}>
+          <a className={styles.login} href={href}>
             Log in with Discord
           </a> 
         </div>
