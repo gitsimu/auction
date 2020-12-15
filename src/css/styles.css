@@ -127,6 +127,7 @@ textarea {
   overflow: hidden;
 }
 .auction-search-category > div {
+  position: relative;
   padding: 12px 20px;
   cursor: pointer;
   transition: 0.2s ease background;
@@ -374,7 +375,7 @@ textarea {
   flex-direction: row;
   justify-content: flex-end;
   width: 100%;
-  padding: 0 5px 5px 5px;
+  padding: 0 5px 15px 5px;
   background: rgba(0,0,0,0.2);
   /* border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px; */
@@ -403,6 +404,7 @@ textarea {
 .bidding .bidding-close {
   width: 100px;  
   cursor: pointer;
+  padding: 0 3px;
 }
 .bidding .bidding-confirm:hover,
 .bidding .bidding-close:hover {
@@ -415,7 +417,7 @@ textarea {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 90%;  
+  width: 100%;  
   
   padding: 5px 10px;
 }
@@ -705,7 +707,11 @@ textarea {
     justify-content: center;
   }
   .auction-search-category span {
-    display: none;
+    position: absolute;
+    display: block;
+    font-size: 10px;
+    bottom: 0;
+    color: #888;
   }
   .auction-search-category i {
     display: block;
@@ -724,5 +730,14 @@ textarea {
 
   .auction-search-area {
     width: 100%;
+  }
+
+  .bidding .bidding-close, 
+  .bidding .bidding-confirm {
+    width: 90px;
+  }
+  .bidding .bidding-input {
+    padding-right: 10px;
+    width: auto;
   }
 }
