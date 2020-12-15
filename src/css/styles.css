@@ -661,23 +661,24 @@ textarea {
     display: block
   }
   .auction-search-list-item > div {
-    display: inline-flex;
+    display: inline-flex !important; 
     vertical-align: bottom;
   }
   .auction-search-list-item .name {
-    width: calc(40% - 50px);
+    width: calc(50% - 50px);
     height: 50px;
     align-items: center;
   }
   .auction-search-list-item .description {
-    width: 60%;
+    width: 50%;
     height: 50px;
     align-items: center;
   }
   .auction-search-list-item > img,
+  .auction-search-list-item > .icon,
   .auction-search-list-item .name,
   .auction-search-list-item .description {
-    margin-bottom: 12px;
+    margin-bottom: 15px;
   }
   .auction-search-list-item .user {
     margin-top: 5px;
