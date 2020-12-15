@@ -8,6 +8,7 @@ export const CATEGORY = [
 ]
 
 export const ITEMS = [
+  {key:0, category:3, name:'페트병 (페트이름은 설명에 기입)', thumbnail:'/images/item/017.jpg'},
   {key:1, category:2, name:'할아버지의 부적', thumbnail:'/images/item/001.jpg'},
   {key:2, category:4, name:'이상한 조개', thumbnail:'/images/item/002.jpg'},
   {key:3, category:0, name:'야무야무의 도끼', thumbnail:'/images/item/003.jpg'},

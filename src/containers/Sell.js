@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import firebase from 'firebase/app'
 import Item from '../components/Item'
 import { CATEGORY, ITEMS } from '../js/global'
+import * as script from '../js/script'
 
 function Sell({info, ...props}) {
   const [loading, isLoading] = React.useState(false)
@@ -51,7 +52,7 @@ function Sell({info, ...props}) {
   const addItems = React.useCallback(() => {
     if (myItems.length >= 10) {
       alert('최대 10개까지 등록할 수 있습니다.\n만료된 물건을 삭제 후 다시 시도해주세요.')
-    } else {
+    } else {      
       if (exhibitCategory === '5') {
         const re = /^[0-9\b]+$/ 
         if (exhibitLevel && re.test(exhibitLevel) && exhibitLevel > 0 && exhibitLevel <= 150 && exhibitLevel != '') {}
@@ -59,25 +60,33 @@ function Sell({info, ...props}) {
           alert('레벨이 올바르지 않습니다.\n[1 ~ 150] 범위로 내의 값으로 입력해주세요.')
           return
         }
-                
-        handleAddItems(
-          exhibitCategory,
-          exhibitItem,
-          description,
-          parseInt(price1.value),
-          parseInt(price2.value),
-          exhibitLevel
-        )
+
+        const confirmMessage = `[품명] : Lv.${exhibitLevel} ${exhibitItem}\n[설명] : ${description}\n[시작가] : ${script.numberWithCommas(price1.value)}\n[즉구가] : ${script.numberWithCommas(price2.value)}\n\n등록된 물건은 24시간 동안 노출되며 만료 전까진 삭제할 수 없습니다.\n계속하시겠습니까?`        
+
+        if (confirm(confirmMessage)) {  
+          handleAddItems(
+            exhibitCategory,
+            exhibitItem,
+            description,
+            parseInt(price1.value) - 100,
+            parseInt(price2.value),
+            exhibitLevel
+          )
+        }
       } else {
-        handleAddItems(
-          exhibitCategory,
-          exhibitItem,
-          description,
-          parseInt(price1.value),
-          parseInt(price2.value),
-        )
+        const itemName = ITEMS.filter((item) => { return item.key === parseInt(exhibitItem) })[0].name
+        const confirmMessage = `[품명] : ${itemName}\n[설명] : ${description}\n[시작가] : ${script.numberWithCommas(price1.value)}\n[즉구가] : ${script.numberWithCommas(price2.value)}\n\n등록된 물건은 24시간 동안 노출되며 만료 전까진 삭제할 수 없습니다.\n계속하시겠습니까?`        
+
+        if (confirm(confirmMessage)) {
+          handleAddItems(
+            exhibitCategory,
+            exhibitItem,
+            description,
+            parseInt(price1.value) - 100,
+            parseInt(price2.value),
+          )
+        }
       }      
-      alert('등록되었습니다.')
     }    
   }, [exhibitCategory, exhibitItem, description, price1, price2])
 
@@ -102,6 +111,7 @@ function Sell({info, ...props}) {
     }
 
     database.ref(`/Items/${itemId}`).update(item)
+    alert('등록되었습니다.')
   }
 
   const onChangePrice = (e, set) => {
@@ -114,16 +124,16 @@ function Sell({info, ...props}) {
 
   const isReadyToAddItems = () => {
     const p1 = parseInt(price1.value)
-    const p2 = parseInt(price2.value)    
+    const p2 = parseInt(price2.value)
     return (
-      exhibitCategory 
-      && exhibitItem 
+      exhibitCategory
+      && exhibitItem
       && p1 < 100000000
       && p2 < 100000000
-      && p1 > 0
-      && p2 > 0
-      && p2 >= p1 
-      && price1.valid 
+      && p1 >= 100
+      && p2 >= 100
+      && p2 >= p1
+      && price1.valid
       && price2.valid)
   }
 
@@ -150,7 +160,7 @@ function Sell({info, ...props}) {
                 }
               })}
             </select>
-          </div>          
+          </div>
         )}
         {exhibitCategory !== null && exhibitCategory === '5' && (
           <div style={{display: 'flex'}}>
@@ -173,11 +183,11 @@ function Sell({info, ...props}) {
         <div className="add-items-price">
           <div>
             <div className="sub-title">시작가</div>
-            <input type="text" onChange={(e) => onChangePrice(e, setPrice1)} className={price1.valid ? '' : 'invalid'} placeholder="시작가 (단위 vip)"></input>
+            <input type="text" onChange={(e) => onChangePrice(e, setPrice1)} className={price1.valid ? '' : 'invalid'} placeholder="100 ~ 99999999 (단위 vip)"></input>
           </div>
           <div>
             <div className="sub-title">즉구가</div>
-            <input type="text" onChange={(e) => onChangePrice(e, setPrice2)} className={price2.valid ? '' : 'invalid'} placeholder="즉구가 (단위 vip)"></input>
+            <input type="text" onChange={(e) => onChangePrice(e, setPrice2)} className={price2.valid ? '' : 'invalid'} placeholder="100 ~ 99999999 (단위 vip)"></input>
           </div>
         </div>
 

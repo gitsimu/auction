@@ -8,8 +8,19 @@ function User({user, info, ...props}) {
   const onDeleteItems = props.onDeleteItems  
   const item = props.item
 
+  const openNewTab = (url) => {
+    const win = window.open(url, '_blank');
+    win.focus();
+  }
+
+  // https://github.com/discord/discord-api-docs/issues/883
   return (
-    <div className="user">
+    <div className="user" 
+      onClick={() => {
+        if (info.id !== userinfo.id) {
+          openNewTab(`https://discordapp.com/users/${userinfo.id}`)
+        }
+      }}>
       {item && userinfo.id && userinfo.avatar && (
         <img src={`https://cdn.discordapp.com/avatars/${userinfo.id}/${userinfo.avatar}.png`}></img>
       )}

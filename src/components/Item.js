@@ -14,7 +14,7 @@ function Item({user, info, selectedItem, ...props}) {
   const database = props.database
   const mine = props.mine
   const item = props.item
-  const itemInfo = ITEMS.filter((i) => { return parseInt(i.key) === parseInt(item.key)})  
+  const itemInfo = ITEMS.filter((i) => { return parseInt(i.key) === parseInt(item.key)})
   let name = itemInfo.length > 0 ? itemInfo[0].name : 'unknown'
   let thumbnail = itemInfo.length > 0 ? itemInfo[0].thumbnail : undefined
   const [expired, isExpired] = React.useState(false)

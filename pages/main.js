@@ -40,16 +40,15 @@ function Main({info, selectedItem, connection}) {
           isLoading(false)
 		  	})
         .catch(console.error)
-
-      
-      fetch('https://discord.com/api/users/243634472803762176', {
-		  	headers: {authorization: `${tokenType} ${accessToken}`}
-		  })
-		  	.then(res => res.json())
-		  	.then(response => {
-          console.log('userinfo', response)
-		  	})
-        .catch(console.error)
+              
+      // fetch('https://discord.com/api/users/243634472803762176', {
+		  // 	headers: {authorization: `${tokenType} ${accessToken}`}
+		  // })
+		  // 	.then(res => res.json())
+		  // 	.then(response => {
+      //     console.log('userinfo', response)
+		  // 	})
+      //   .catch(console.error)
 
     } else {
       location.href = '/'      

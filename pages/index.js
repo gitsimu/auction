@@ -7,8 +7,11 @@ import FirebaseConfig from '../firebaseConfig'
 import DiscordConfig from '../discordConfig'
 
 export default function Home() {
+  // prod
   const href = `https://discord.com/api/oauth2/authorize?client_id=767649418148446248&redirect_uri=http%3A%2F%2F13.125.119.95%2Fcallback.html&response_type=token&scope=identify`;
-  // `https://discord.com/api/oauth2/authorize?client_id=767649418148446248&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fcallback.html&response_type=token&scope=identify%20email%20connections`
+  // dev
+  // const href =  `https://discord.com/api/oauth2/authorize?client_id=767649418148446248&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fcallback.html&response_type=token&scope=identify%20email%20connections`
+  
   return (
     <div className={styles.container}>
       <Head>
