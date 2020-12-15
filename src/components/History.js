@@ -32,7 +32,7 @@ function History({...props}) {
                 <span>{m.userinfo.userid}</span>
               </div> */}
             </div>
-            <div>[입찰] {script.numberWithCommas(m.price)} vip</div>
+            <div>[입찰] {script.numberWithCommas(m.price)} VIP</div>
             <div>{script.getNiceTime(m.timestamp, new Date(), 1, true)}</div>
           </div>
         )

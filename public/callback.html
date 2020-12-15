@@ -1,13 +1,19 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>My First OAuth2 App</title>
+	<title>Fresh Auction Discord OAuth2</title>
+	<style>
+		body {
+			color: #fff;
+    	background: rgba(34, 37, 43, 1);
+		}
+	</style>
 </head>
 <body>
 	<div id="info">
 		Loading...
 	</div>
-	<a id="login" style="display: none;" href="your oauth2 url here">Identify Yourself</a>
+	<!-- <a id="login" style="display: none;" href="your oauth2 url here">Identify Yourself</a> -->
 	<script>
 		window.onload = () => {
 			const fragment = new URLSearchParams(window.location.hash.slice(1));
@@ -19,6 +25,9 @@
 				setCookie('discord_token_type', tokenType, 1)
 
 				location.href = "/main"
+			} else {
+				alert('인증 정보가 올바르지 않습니다.\n다시 한 번 시도해주세요.')
+				location.href = "/"
 			}
 		}
 

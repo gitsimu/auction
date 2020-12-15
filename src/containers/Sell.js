@@ -183,11 +183,11 @@ function Sell({info, ...props}) {
         <div className="add-items-price">
           <div>
             <div className="sub-title">시작가</div>
-            <input type="text" onChange={(e) => onChangePrice(e, setPrice1)} className={price1.valid ? '' : 'invalid'} placeholder="100 ~ 99999999 (단위 vip)"></input>
+            <input type="text" onChange={(e) => onChangePrice(e, setPrice1)} className={price1.valid ? '' : 'invalid'} placeholder="100 ~ 99999999 (단위 VIP)"></input>
           </div>
           <div>
             <div className="sub-title">즉구가</div>
-            <input type="text" onChange={(e) => onChangePrice(e, setPrice2)} className={price2.valid ? '' : 'invalid'} placeholder="100 ~ 99999999 (단위 vip)"></input>
+            <input type="text" onChange={(e) => onChangePrice(e, setPrice2)} className={price2.valid ? '' : 'invalid'} placeholder="100 ~ 99999999 (단위 VIP)"></input>
           </div>
         </div>
 

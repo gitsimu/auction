@@ -101,7 +101,7 @@ function Buy({info, ...props}) {
     <div className="buy-items">      
       {myItems.map((m) => {
         console.log('myItems', myItems)
-        return (<Item item={m} database={database} key={m.id} mine={true}/>)
+        return (<Item item={m} database={database} key={m.id} mine={false}/>)
       })}
       {myItems.length === 0 && (
         <div className="buy-items-empty">입찰내역이 없습니다.</div>

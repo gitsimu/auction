@@ -33,7 +33,7 @@ function Item({user, info, selectedItem, ...props}) {
         p2 = parseInt(item.price2)
 
     if (p < p1 + 100) {
-      alert(`${p1 + 100}vip 부터 입찰할 수 있습니다.`)
+      alert(`${p1 + 100}VIP 부터 입찰할 수 있습니다.`)
       return
     } else if (p > p2) {
       const result = confirm(`즉구가(${script.numberWithCommas(p2)})보다 높은 가격입니다.\n계속하시겠습니까?`)
