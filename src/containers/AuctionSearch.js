@@ -84,7 +84,12 @@ function AuctionSearch({info, selectedItem, ...props}) {
       <div className="auction-search-bottom">        
         <div className="auction-search-category">
           {CATEGORY.map((m, i) => {
-            return (<div key={m.key} onClick={() => {setCategory(m.key)}}>{m.name}</div>)
+            return (
+              <div key={m.key} onClick={() => {setCategory(m.key)}}>
+                <i className={m.icon}></i>
+                <span>{m.name}</span>                
+              </div>
+            )
           })}
         </div>
         <div className="auction-search-body">

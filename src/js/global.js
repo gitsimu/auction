@@ -1,10 +1,10 @@
 export const CATEGORY = [
-  {key: 0, name: '무기'},
-  {key: 1, name: '방어구'},
-  {key: 2, name: '장신구'},
-  {key: 3, name: '소모용품'},
-  {key: 4, name: '기타아이템'},
-  {key: 5, name: '페트'},
+  {key: 0, name: '무기', icon: 'icon-cursor'},
+  {key: 1, name: '방어구', icon: 'icon-shield'},
+  {key: 2, name: '장신구', icon: 'icon-diamond'},
+  {key: 3, name: '소모용품', icon: 'icon-chemistry'},
+  {key: 4, name: '기타아이템', icon: 'icon-key'},
+  {key: 5, name: '페트', icon: 'icon-ghost'},
 ]
 
 export const ITEMS = [

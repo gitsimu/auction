@@ -134,6 +134,9 @@ textarea {
 .auction-search-category > div:hover {
   background: rgba(0,0,0,0.2);
 }
+.auction-search-category i {
+  display: none;
+}
 .auction-search-body {
   flex: 1;
   padding-left: 20px;
@@ -420,7 +423,7 @@ textarea {
   background: darkorchid;
 }
 .bidding .bidding-close > div {
-  background: rgba(34, 37, 43, 1);
+  background: #000;
 }
 
 
@@ -630,5 +633,96 @@ textarea {
   100% {
     -webkit-transform: translateX(0);
     opacity: 1;
+  }
+}
+
+
+/* MOBILE */
+@media (max-width: 767px) {
+  .auction-main {
+    height: auto;
+    min-height: 100vh;
+  }
+  .add-items-info {
+    width: 100%;
+  }
+  .add-items {
+    flex-direction: column;
+  }
+  .my-items {
+    padding: 0;
+    padding-top: 20px;
+    margin-top: 50px;
+    border-top: 1px solid #333;
+  }
+  .auction-search-list-item {
+    display: block
+  }
+  .auction-search-list-item > div {
+    display: inline-flex;
+    vertical-align: bottom;
+  }
+  .auction-search-list-item .name {
+    width: calc(40% - 50px);
+    height: 50px;
+    align-items: center;
+  }
+  .auction-search-list-item .description {
+    width: 60%;
+    height: 50px;
+    align-items: center;
+  }
+  .auction-search-list-item > img,
+  .auction-search-list-item .name,
+  .auction-search-list-item .description {
+    margin-bottom: 12px;
+  }
+  .auction-search-list-item .user {
+    margin-top: 5px;
+  }
+  .auction-search-list-item:nth-child(2n) {
+    background-color: rgba(0,0,0,0.15);
+  }
+
+  /* .auction-search-category {
+    position: absolute;
+    z-index: 99;
+    transform: translateX(-300px);
+    transition: 0.3s ease all;
+  }
+  .auction-search-category.mobile-show {
+    transform: translateX(0);
+  } */
+
+  .auction-search-category {
+    width: 50px;
+  }
+  .auction-search-category > div {
+    padding: 0;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .auction-search-category span {
+    display: none;
+  }
+  .auction-search-category i {
+    display: block;
+  }
+  .auction-search-body {
+    padding-left: 10px;
+  }
+  
+  .auction-search-top {
+    position: relative;
+    top: auto;
+    left: auto;
+    justify-content: flex-start;
+    padding: 0 10px;
+  }
+
+  .auction-search-area {
+    width: 100%;
   }
 }
