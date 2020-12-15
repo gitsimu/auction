@@ -25,6 +25,7 @@ function User({user, info, ...props}) {
         <img src={`https://cdn.discordapp.com/avatars/${userinfo.id}/${userinfo.avatar}.png`}></img>
       )}
       <span>{userinfo.userid}</span>
+      <div className="user-tooltip">{userinfo.userid}</div>
       {expired && item && info.id === userinfo.id && (
         <div className="delete-item" onClick={() => {onDeleteItems(item)}}>Delete</div>
       )}

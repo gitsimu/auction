@@ -289,10 +289,34 @@ textarea {
 }
 .user > span {
   padding-right: 5px;
-  max-width: 100px;
+  width: 100px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  font-size: 12px;
+  text-align: left;
+}
+.user > .user-tooltip {
+  opacity: 0;
+  display: flex;
+  align-items: center;
+  justify-self: center;
+  position: absolute;
+  top: 30px;
+  left: 20px;
+  background-color: #000;
+  color: #fff;
+  font-size: 12px;
+  padding: 5px 10px;
+  border-radius: 5px;    
+  transition: 0.2s ease all;
+  transition-delay: 0s;
+  /* animation-delay: 2s; */
+}
+.user:hover > .user-tooltip {   
+  opacity: 1;
+  transition-delay: 1s;
+  /* animation: fade-in .2s linear alternate forwards; */
 }
 .auction-search-list-item .delete-item {
   display: none;
@@ -614,6 +638,23 @@ textarea {
   }
   100% {
     -webkit-transform: rotate(360deg);
+  }
+}
+
+@keyframes fade-in {
+  0% {    
+    opacity: 0;
+  }
+  100% {    
+    opacity: 1;
+  }
+}
+@-webkit-keyframes fade-in {
+  0% {    
+    opacity: 0;
+  }
+  100% {    
+    opacity: 1;
   }
 }
 

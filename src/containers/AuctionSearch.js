@@ -53,7 +53,7 @@ function AuctionSearch({info, selectedItem, ...props}) {
         isLoading(false)
       })
     } 
-    // else { alert(`[${searchKeyword}] 정보가 없습니다.\n다시 한 번 시도해주세요.`) }    
+    // else { alert(`[${searchKeyword}] 정보가 없습니다.\n다시 한 번 시도해주세요.`) }
 
     return () => { ref.off() }
   }, [searchKeyword])
